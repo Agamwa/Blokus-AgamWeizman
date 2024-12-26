@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/projectbackground"
+    android:orientation="vertical"
+    tools:context=".SignInActivity">
+
+    <TextView
+        android:layout_width="163dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="135dp"
+        android:layout_marginTop="70dp"
+        android:fontFamily="@font/titles"
+        android:text="Sign in"
+        android:textColor="#EBEDF6"
+        android:textSize="40dp"
+        android:textStyle="bold" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tiSignInUsername"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="306dp"
+            android:layout_marginLeft="45dp"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:hint="Enter your username" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="30dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/tiSignInPassword"
+                android:layout_width="306dp"
+                android:layout_marginLeft="45dp"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:hint="Enter your password" />
+        </com.google.android.material.textfield.TextInputLayout>
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+
+    <Button
+        android:id="@+id/btnSignIn"
+        android:layout_width="132dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="127dp"
+        android:layout_marginTop="-350dp"
+        android:backgroundTint="#17287C"
+        android:fontFamily="@font/titles"
+        android:text="Sign up"
+        android:textSize="20dp" />
+
+
+
+</LinearLayout>
