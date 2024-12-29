@@ -15,6 +15,7 @@ public class GameHistoryFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        return inflater.inflate(R.layout.fragment_game_history, container, false);
+        View view = inflater.inflate(R.layout.fragment_game_history, container, false);
+        return view;
     }
 }
