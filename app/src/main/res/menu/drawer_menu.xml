@@ -7,5 +7,35 @@
         android:title="Settings"
         android:fontFamily="@font/titles"/>
 
+    <item
+        android:id="@+id/nav_choose"
+        android:icon="@drawable/ic_choose"
+        android:title="Start a new game"
+        android:fontFamily="@font/titles"/>
+
+    <item
+        android:id="@+id/nav_rules"
+        android:icon="@drawable/ic_rules"
+        android:title=" Game Rules"
+        android:fontFamily="@font/titles"/>
+
+    <item
+        android:id="@+id/nav_game_history"
+        android:icon="@drawable/ic_game_history"
+        android:title=" Game History"
+        android:fontFamily="@font/titles"/>
+
+    <item
+        android:id="@+id/nav_board"
+        android:icon="@drawable/ic_back_to_game"
+        android:title=" Back to game"
+        android:fontFamily="@font/titles"/>
+
+    <item
+        android:id="@+id/nav_logout"
+        android:icon="@drawable/ic_logout"
+        android:title="Logout"
+        android:fontFamily="@font/titles"/>
+
 
 </menu>

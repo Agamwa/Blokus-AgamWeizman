@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/projectbackground"
     android:orientation="vertical"
-    tools:context=".AboutFragment">
+    tools:context=".RulesFragment">
 
     <TextView
         android:layout_width="163dp"

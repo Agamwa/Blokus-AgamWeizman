@@ -18,12 +18,6 @@ Button btnSignIn;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
         btnSignIn = findViewById(R.id.btnSignIn);
-        btnSignIn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(SignInActivity.this, ChooseActivity.class);
-                startActivity(intent);
-            }
-        });
+
     }
 }
