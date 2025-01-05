@@ -21,33 +21,26 @@
 
     <TextView
         android:layout_width="388dp"
-        android:layout_height="wrap_content"
+        android:layout_height="514dp"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="5dp"
-        android:background="#DC570CDC"
+        android:layout_marginTop="-25dp"
+        android:background="#9CFF359D"
+        android:fontFamily="@font/regular"
         android:padding="12dp"
-        android:text="Start of the Game:
-Each player places their first piece in one of the corners of the board.
+        android:text="Each player places their first piece in one of the corners of the board.
 The first piece must cover the corner square of their chosen corner.
-Player Turn:
 Players take turns alternately
  On their turn, a player selects one piece and places it on the board,
-following the placement rules:
 The new piece must touch a corner of another piece belonging to the player (two pieces of the same color).
 Pieces of the same color are not allowed to touch along their edges.
 Pieces can touch along their edges with pieces of the opponent.
-Illegal Placement:
 If a player cannot place a piece, they skip their turn.
-End of the Game:
 The game ends when none of the players can place any more pieces.
-Scoring:
 Each player counts how many squares are left unplaced on the board in their pieces.
 The player with the fewest remaining squares is the winner
 Have fun playing! 😊"
         android:textAlignment="center"
         android:textColor="@color/white"
-        android:textFontWeight="30"
-        android:textSize="20sp"
-        android:textStyle="bold" />
+        android:textSize="20sp" />
 
 </LinearLayout>

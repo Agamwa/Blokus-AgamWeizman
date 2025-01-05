@@ -1,8 +1,11 @@
 package agam.w.myproject;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
+import android.window.OnBackInvokedCallback;
+import android.window.OnBackInvokedDispatcher;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -49,28 +52,17 @@ public class GameActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 int id = item.getItemId();
-                if (id == R.id.nav_choose)
-                {
+                if (id == R.id.nav_choose) {
                     replaceFragment(new ChooseFragment());
-                }
-                else if (id == R.id.nav_game_history)
-                {
+                } else if (id == R.id.nav_game_history) {
                     replaceFragment(new GameHistoryFragment());
-                }
-                else if (id == R.id.nav_rules)
-                {
+                } else if (id == R.id.nav_rules) {
                     replaceFragment(new RulesFragment());
-                }
-                else if (id == R.id.nav_settings)
-                {
+                } else if (id == R.id.nav_settings) {
                     replaceFragment(new SettingsFragment());
-                }
-                else if (id == R.id.nav_board)
-                {
+                } else if (id == R.id.nav_board) {
                     replaceFragment(new BoardFragment());
-                }
-                else if (id == R.id.nav_logout)
-                {
+                } else if (id == R.id.nav_logout) {
 
                 }
 
@@ -78,16 +70,40 @@ public class GameActivity extends AppCompatActivity {
                 drawerLayout.closeDrawers();
                 return true;
             }
-            });
-        }
+        });
 
-    private void replaceFragment(Fragment fragment)
-    {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            OnBackInvokedCallback callback = new OnBackInvokedCallback() {
+                @Override
+                public void onBackInvoked() {
+                    if (drawerLayout.isDrawerOpen(navigationView)) {
+                        drawerLayout.closeDrawer(navigationView);
+                    } else {
+                        finish();
+                    }
+                }
+            };
+
+            getOnBackInvokedDispatcher().registerOnBackInvokedCallback(
+                    OnBackInvokedDispatcher.PRIORITY_DEFAULT, callback);
+        }
+    }
+
+    private void replaceFragment(Fragment fragment) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.frame_container, fragment);
-        transaction.addToBackStack(  null);
+        transaction.addToBackStack(null);
         transaction.commit();
     }
 
+    @Override
+    public void onBackPressed() {
+        if (drawerLayout.isDrawerOpen(navigationView)) {
+            drawerLayout.closeDrawer(navigationView);
+        } else {
+            super.onBackPressed();
+        }
+    }
 
-}
+    }
+
