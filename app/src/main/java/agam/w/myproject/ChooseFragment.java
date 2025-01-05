@@ -2,9 +2,10 @@ package agam.w.myproject;
 
 import android.os.Bundle;
 
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,8 +21,21 @@ public class ChooseFragment extends Fragment {
 
       View view = inflater.inflate(R.layout.fragment_choose, container, false);
       btnPracticeGame = view.findViewById(R.id.btnPracticeGame);
+      btnPracticeGame.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View v) {
+              replaceFragment(new BoardFragment());
+          }});
       btnTwoPlayers = view.findViewById(R.id.btnTwoPlayers);
 
       return view;
+    }
+
+    public void replaceFragment(Fragment fragment) {
+        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.replace(R.id.frame_container, fragment);
+        transaction.commit();
+
     }
 }
