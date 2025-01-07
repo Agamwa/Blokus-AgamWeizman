@@ -94,7 +94,7 @@
         android:layout_width="132dp"
         android:text="Sign up"
         android:layout_height="50dp"
-        android:layout_marginTop="-100dp"
+        android:layout_marginTop="-70dp"
         android:layout_marginLeft="127dp"
         android:backgroundTint="#17287C"
         android:fontFamily="@font/titles"
