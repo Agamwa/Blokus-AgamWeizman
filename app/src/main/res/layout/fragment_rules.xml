@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/projectbackground"
+    android:background="@drawable/background2"
     android:orientation="vertical"
     tools:context=".RulesFragment">
 
@@ -24,7 +24,7 @@
         android:layout_height="514dp"
         android:layout_marginStart="10dp"
         android:layout_marginTop="-25dp"
-        android:background="#9CFF359D"
+        android:background="#344C6A"
         android:fontFamily="@font/regular"
         android:padding="12dp"
         android:text="Each player places their first piece in one of the corners of the board.

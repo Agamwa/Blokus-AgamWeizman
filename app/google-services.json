@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "96351522275",
+    "project_id": "blokus-cbb06",
+    "storage_bucket": "blokus-cbb06.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:96351522275:android:f0478d77f74a09de3a64d6",
+        "android_client_info": {
+          "package_name": "agam.w.myproject"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCG3H1cDgQs1U-i-jWB96oO6m1ZY_UCNf8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

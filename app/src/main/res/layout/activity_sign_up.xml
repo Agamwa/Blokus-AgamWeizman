@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/projectbackground"
+    android:background="@drawable/background2"
     android:orientation="vertical"
     tools:context=".signUpActivity">
 
@@ -82,7 +82,8 @@
                             android:layout_marginLeft="45dp"
                             android:layout_height="wrap_content"
                             android:background="@color/white"
-                            android:hint="Enter password" />
+                            android:hint="Enter password"
+                            />
                     </com.google.android.material.textfield.TextInputLayout>
                 </com.google.android.material.textfield.TextInputLayout>
             </com.google.android.material.textfield.TextInputLayout>
@@ -96,7 +97,7 @@
         android:layout_height="50dp"
         android:layout_marginTop="-70dp"
         android:layout_marginLeft="127dp"
-        android:backgroundTint="#17287C"
+        android:backgroundTint="#344C6A"
         android:fontFamily="@font/titles"
         android:textSize="20dp" />
 </LinearLayout>
