@@ -22,82 +22,79 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tiSignUpName"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="306dp"
-            android:layout_marginLeft="45dp"
             android:layout_height="wrap_content"
             android:background="@color/white"
             android:hint="Enter your first name" />
+    </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tiSignUpLastName"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_marginTop="30dp"
-            android:layout_height="match_parent">
+            android:layout_gravity="center"
+            android:layout_height="wrap_content">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="306dp"
-                android:layout_marginLeft="45dp"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
                 android:hint="Enter your last name" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputLayout
+        <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/tiSignUpEmail"
-                android:layout_width="match_parent"
+                android:layout_width="306dp"
                 android:layout_marginTop="30dp"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content"
+                android:layout_gravity="center">
 
-                <com.google.android.material.textfield.TextInputEditText
+            <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="306dp"
-                    android:layout_marginLeft="45dp"
                     android:layout_height="wrap_content"
                     android:background="@color/white"
                     android:hint="Enter your email adress" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-                <com.google.android.material.textfield.TextInputLayout
+            <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/tiSignUpUsername"
-                    android:layout_width="match_parent"
+                    android:layout_width="306dp"
                     android:layout_marginTop="30dp"
-                    android:layout_height="match_parent">
-
-                    <com.google.android.material.textfield.TextInputEditText
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center">
+                <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="306dp"
-                        android:layout_marginLeft="45dp"
                         android:layout_height="wrap_content"
                         android:background="@color/white"
                         android:hint="Enter username" />
-
-                    <com.google.android.material.textfield.TextInputLayout
+             </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/tiSignUpPassword"
-                        android:layout_width="match_parent"
+                        android:layout_width="306dp"
                         android:layout_marginTop="30dp"
-                        android:layout_height="match_parent">
-
-                        <com.google.android.material.textfield.TextInputEditText
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center">
+                <com.google.android.material.textfield.TextInputEditText
                             android:layout_width="306dp"
-                            android:layout_marginLeft="45dp"
                             android:layout_height="wrap_content"
                             android:background="@color/white"
-                            android:hint="Enter password"
-                            />
-                    </com.google.android.material.textfield.TextInputLayout>
+                            android:hint="Enter password" />
                 </com.google.android.material.textfield.TextInputLayout>
-            </com.google.android.material.textfield.TextInputLayout>
-        </com.google.android.material.textfield.TextInputLayout>
-    </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/btnSignUp"
         android:layout_width="132dp"
-        android:text="Sign up"
         android:layout_height="50dp"
-        android:layout_marginTop="-70dp"
-        android:layout_marginLeft="127dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
         android:backgroundTint="#344C6A"
+        android:textColor="#ffffff"
         android:fontFamily="@font/titles"
+        android:text="Sign up"
         android:textSize="20dp" />
 </LinearLayout>
