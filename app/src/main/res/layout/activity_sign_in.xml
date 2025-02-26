@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background2"
+    android:background="@drawable/backg"
     android:orientation="vertical"
     tools:context=".SignInActivity">
 
@@ -16,7 +16,7 @@
         android:layout_marginTop="70dp"
         android:fontFamily="@font/titles"
         android:text="Sign in"
-        android:textColor="#EBEDF6"
+        android:textColor="#17287C"
         android:textSize="40dp"
         android:textStyle="bold" />
 
@@ -31,7 +31,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="306dp"
             android:layout_height="wrap_content"
-            android:background="@color/white"
+            android:background="#FFFFFF"
             android:hint="Enter your username"
             android:inputType="textEmailAddress" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -58,7 +58,7 @@
         android:layout_height="50dp"
         android:layout_gravity="center"
         android:layout_marginTop="10dp"
-        android:backgroundTint="#344C6A"
+        android:backgroundTint="#17287C"
         android:fontFamily="@font/titles"
         android:text="Sign in"
         android:textSize="20dp" />
