@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
-    android:background="#292132"
     android:layout_height="match_parent"
+    android:background="#CD8C9C"
     android:orientation="vertical"
     tools:context=".SplashActivity">
 
@@ -16,5 +16,5 @@
         android:layout_height="320dp"
         android:layout_marginLeft="50dp"
         android:layout_marginTop="200dp"
-        app:srcCompat="@drawable/logo" />
+        app:srcCompat="@drawable/cat_logo" />
 </LinearLayout>

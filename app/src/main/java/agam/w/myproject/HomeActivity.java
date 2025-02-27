@@ -12,23 +12,23 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 public class HomeActivity extends AppCompatActivity {
-View viewSignIn, viewSignUp;
+Button btnSignIn, btnSignUp;
 
 @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-    viewSignIn = findViewById(R.id.viewSignIn);
-    viewSignUp = findViewById(R.id.viewSignUp);
-    viewSignIn.setOnClickListener(new View.OnClickListener() {
+    btnSignIn = findViewById(R.id.btnSignIn);
+    btnSignUp = findViewById(R.id.btnSignUp);
+    btnSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(HomeActivity.this, SignInActivity.class);
                 startActivity(intent);
             }
         });
-    viewSignUp.setOnClickListener(new View.OnClickListener() {
+    btnSignUp.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             Intent intent = new Intent(HomeActivity.this, signUpActivity.class);
