@@ -8,17 +8,23 @@
     android:layout_height="match_parent"
     tools:context=".GameActivity">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/tbMain"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:title="My App"/>
+        android:layout_height="wrap_content" />
 
     <FrameLayout
         android:id="@+id/frame_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
     </FrameLayout>
+
+    </LinearLayout>
 
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/navigation_view"

@@ -1,5 +1,6 @@
 package agam.w.myproject;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -38,7 +39,9 @@ public class GameActivity extends AppCompatActivity {
         flMain = findViewById(R.id.frame_container);
         tbMain = findViewById(R.id.tbMain);
         setSupportActionBar(tbMain);
-
+        Intent intent = new Intent(getApplicationContext(), MyService.class);
+        intent.setAction("PLAY");
+        startService(intent);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this,
                 drawerLayout,
@@ -58,8 +61,21 @@ public class GameActivity extends AppCompatActivity {
                     replaceFragment(new GameHistoryFragment());
                 } else if (id == R.id.nav_rules) {
                     replaceFragment(new RulesFragment());
-                } else if (id == R.id.nav_settings) {
-                    replaceFragment(new SettingsFragment());
+                } else if (id == R.id.nav_volume) {
+                    if(item.getTitle().toString().equals("Turn on music")){
+                        Intent intent = new Intent(getApplicationContext(), MyService.class);
+                        intent.setAction("PLAY");
+                        startService(intent);
+                        item.setIcon(R.drawable.ic_volume_off);
+                        item.setTitle("Turn off music");
+                    }
+                    else{
+                        Intent intent = new Intent(getApplicationContext(), MyService.class);
+                        intent.setAction("STOP");
+                        startService(intent);
+                        item.setIcon(R.drawable.ic_volume_up);
+                        item.setTitle("Turn on music");
+                        }
                 } else if (id == R.id.nav_board) {
                     replaceFragment(new BoardFragment());
                 } else if (id == R.id.nav_logout) {
