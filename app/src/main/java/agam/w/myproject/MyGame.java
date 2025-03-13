@@ -67,13 +67,13 @@ public class MyGame
         else
             this.player2[pos] = c;
     }
-
+    // זריקת קלף לערימת זבל
     public void throwToStock(Card c)
     {
         this.stock.push(c);
 
     }
-
+    // פעולה המקבלת את מספר השחקן ואת מקום הקלף שבחר ומחליפה את הקלף האחרון בערימת ה"זבל" אל מקום הקלף שהשחקן בחר.
     public void takeLastCardFromStock(int playerNum, int chosenPlace)
     {
         if(!this.stock.empty())
@@ -93,14 +93,14 @@ public class MyGame
             this.stock.push(c1);
         }
     }
-
+//פעולה שתתרחש בקבלת הקלף "הצץ"- היא מקבלת את מספר השחקן ואת המקום שבחר ומראה לשחקן את הקלף שבחר להציץ בו.
     public Card takeAPeak(int playerNum, int chosenPlace)
     {
         if(playerNum == 1)
             return this.player1[chosenPlace];
         return this.player2[chosenPlace];
     }
-
+    // פעולה שתתרחש בקבלת הקלף "החלף"- היא מקבל את השחקן שקיבל את הקלף, את המקום של הקלף שירצה להחליף ואת הקלף שירצה להחליף איתו מהשחקן השני. פעולה זו מבצעת את ההחלפה בין שני הקלפים.
     public void change(int fromPlayer, int toPlayer, int fromPosition, int toPosition) {
         if (fromPlayer == 1)
         {
