@@ -9,7 +9,7 @@ public class MyGame
 {
     private int turnNumber;
     private Card[] player1, player2;
-    private Stack<Card> heap, stock;
+    private Stack<Card> heap, stock; // heap= ערימה שלוקחים ממנה קלפים, stock= ערימת זבל
     private int sum1, sum2;
     private Card player1CurrentCard;
     private Card player2CurrentCard;
@@ -73,4 +73,48 @@ public class MyGame
         this.stock.push(c);
 
     }
+
+    public void takeLastCardFromStock(int playerNum, int chosenPlace)
+    {
+        if(!this.stock.empty())
+        {
+            Card c = this.stock.pop();
+            Card c1 = null;
+            if(playerNum == 1)
+            {
+                c1 = this.player1[chosenPlace];
+                this.player1[chosenPlace] = c;
+            }
+            else
+            {
+                c1 = this.player2[chosenPlace];
+                this.player2[chosenPlace] = c;
+            }
+            this.stock.push(c1);
+        }
+    }
+
+    public Card takeAPeak(int playerNum, int chosenPlace)
+    {
+        if(playerNum == 1)
+            return this.player1[chosenPlace];
+        return this.player2[chosenPlace];
+    }
+
+    public void change(int fromPlayer, int toPlayer, int fromPosition, int toPosition) {
+        if (fromPlayer == 1)
+        {
+            Card fromCard = this.player1[fromPosition];
+            this.player1[fromPlayer] = this.player2[toPosition];
+            this.player2[toPosition] = fromCard;
+        }
+        else
+        {
+            Card fromCard = this.player2[fromPosition];
+            this.player2[fromPlayer] = this.player1[toPosition];
+            this.player1[toPosition] = fromCard;
+        }
+
+    }
+
 }
