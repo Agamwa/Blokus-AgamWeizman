@@ -14,8 +14,8 @@
         android:layout_marginTop="70dp"
         android:fontFamily="@font/titles"
         android:text="Setting"
-        android:textColor="#EBEDF6"
         android:textSize="40dp"
+        android:textColor="#17287C"
         android:textStyle="bold" />
 
 
