@@ -14,31 +14,22 @@
         android:layout_marginTop="70dp"
         android:fontFamily="@font/titles"
         android:text="Rules"
-        android:textColor="#EBEDF6"
+        android:backgroundTint="#17287C"
         android:textSize="40dp"
         android:textStyle="bold" />
 
 
     <TextView
         android:layout_width="388dp"
-        android:layout_height="514dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginTop="-25dp"
-        android:background="#344C6A"
+        android:background="#17287C"
         android:fontFamily="@font/regular"
         android:padding="12dp"
-        android:text="Each player places their first piece in one of the corners of the board.
-The first piece must cover the corner square of their chosen corner.
-Players take turns alternately
- On their turn, a player selects one piece and places it on the board,
-The new piece must touch a corner of another piece belonging to the player (two pieces of the same color).
-Pieces of the same color are not allowed to touch along their edges.
-Pieces can touch along their edges with pieces of the opponent.
-If a player cannot place a piece, they skip their turn.
-The game ends when none of the players can place any more pieces.
-Each player counts how many squares are left unplaced on the board in their pieces.
-The player with the fewest remaining squares is the winner
-Have fun playing! 😊"
+        android:text="Each player receives 4 cards. Without looking at them, they arrange them in a row face down. The remaining cards form a draw pile.
+On their turn, a player draws a card from the draw pile and decides whether to replace one of their own cards with it. Then, they place a card in the discard pile.
+Pay attention to action cards, as they can change moves and determine the game's outcome. Get rid of high-numbered cards and aim for lower ones!The round ends when a player believes the total value of their four cards is the lowest. They then declare out loud: Chatulkat! The player with the lowest total score at the end of all rounds wins the game. Enjoy playing!"
         android:textAlignment="center"
         android:textColor="@color/white"
         android:textSize="20sp" />
