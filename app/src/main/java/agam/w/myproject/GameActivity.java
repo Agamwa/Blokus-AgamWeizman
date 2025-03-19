@@ -8,13 +8,9 @@ import android.widget.FrameLayout;
 import android.window.OnBackInvokedCallback;
 import android.window.OnBackInvokedDispatcher;
 
-import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -39,7 +35,7 @@ public class GameActivity extends AppCompatActivity {
         flMain = findViewById(R.id.frame_container);
         tbMain = findViewById(R.id.tbMain);
         setSupportActionBar(tbMain);
-        Intent intent = new Intent(getApplicationContext(), MyService.class);
+        Intent intent = new Intent(getApplicationContext(), MusicService.class);
         intent.setAction("PLAY");
         startService(intent);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -63,14 +59,14 @@ public class GameActivity extends AppCompatActivity {
                     replaceFragment(new RulesFragment());
                 } else if (id == R.id.nav_volume) {
                     if(item.getTitle().toString().equals("Turn on music")){
-                        Intent intent = new Intent(getApplicationContext(), MyService.class);
+                        Intent intent = new Intent(getApplicationContext(), MusicService.class);
                         intent.setAction("PLAY");
                         startService(intent);
                         item.setIcon(R.drawable.ic_volume_off);
                         item.setTitle("Turn off music");
                     }
                     else{
-                        Intent intent = new Intent(getApplicationContext(), MyService.class);
+                        Intent intent = new Intent(getApplicationContext(), MusicService.class);
                         intent.setAction("STOP");
                         startService(intent);
                         item.setIcon(R.drawable.ic_volume_up);

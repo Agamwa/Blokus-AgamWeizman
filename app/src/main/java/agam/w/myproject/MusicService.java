@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.IBinder;
 
-public class MyService extends Service {
+public class MusicService extends Service {
     private MediaPlayer mediaPlayer;
 
     @Override
@@ -14,7 +14,7 @@ public class MyService extends Service {
         mediaPlayer = new MediaPlayer();
     }
 
-    public MyService() {
+    public MusicService() {
         mediaPlayer = new MediaPlayer();
     }
 
