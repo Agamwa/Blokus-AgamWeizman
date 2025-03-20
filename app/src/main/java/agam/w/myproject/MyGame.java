@@ -117,4 +117,7 @@ public class MyGame
 
     }
 
+    public Card[] getPlayer1() {
+        return player1;
+    }
 }

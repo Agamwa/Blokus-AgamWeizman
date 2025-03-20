@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/backg"
+    android:background="@drawable/app_background"
     android:orientation="vertical"
     tools:context=".SignInActivity">
 
@@ -14,11 +14,10 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="70dp"
-        android:fontFamily="@font/titles"
+        android:fontFamily="@font/spicy_rice"
         android:text="Sign in"
         android:textColor="#17287C"
-        android:textSize="40dp"
-        android:textStyle="bold" />
+        android:textSize="40dp" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tiSignInUsername"

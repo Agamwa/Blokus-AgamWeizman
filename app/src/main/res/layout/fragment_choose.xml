@@ -2,29 +2,28 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@drawable/backg"
+    android:background="@drawable/app_background"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".ChooseFragment">
 
     <TextView
-        android:layout_width="207dp"
+        android:layout_width="871dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="100dp"
-        android:layout_marginTop="20dp"
-        android:fontFamily="@font/titles"
+        android:layout_marginLeft="-230dp"
+        android:layout_marginTop="70dp"
+        android:fontFamily="@font/spicy_rice"
         android:text="Choose how to play"
         android:textAlignment="center"
         android:textColor="#17287C"
-        android:textSize="40dp"
-        android:textStyle="bold" />
+        android:textSize="40dp" />
 
     <Button
         android:id="@+id/btnPracticeGame"
         android:layout_width="163dp"
         android:layout_height="50dp"
         android:layout_marginLeft="120dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="80dp"
         android:backgroundTint="#17287C"
         android:fontFamily="@font/titles"
         android:text="Practice game"
