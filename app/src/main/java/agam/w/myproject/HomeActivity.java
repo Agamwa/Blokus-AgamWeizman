@@ -1,7 +1,12 @@
 package agam.w.myproject;
 
+import static android.view.View.INVISIBLE;
+import static android.view.View.VISIBLE;
+
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.View;
 import android.widget.Button;
 
@@ -21,6 +26,8 @@ Button btnSignIn, btnSignUp;
 
     btnSignIn = findViewById(R.id.btnSignIn);
     btnSignUp = findViewById(R.id.btnSignUp);
+    btnSignIn.setVisibility(INVISIBLE);
+    btnSignUp.setVisibility(INVISIBLE);
     btnSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -35,6 +42,15 @@ Button btnSignIn, btnSignUp;
             startActivity(intent);
         }
     });
+
+    Handler handler = new Handler(Looper.getMainLooper());
+    handler.postDelayed(new Runnable() {
+        @Override
+        public void run() {
+            btnSignIn.setVisibility(VISIBLE);
+            btnSignUp.setVisibility(VISIBLE);
+        }
+    }, 2000);
 
     }
 }
