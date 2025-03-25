@@ -25,7 +25,7 @@ public class SplashActivity extends AppCompatActivity {
         Animation animation = AnimationUtils.loadAnimation(this, R.anim.my_anim);
         animation.setDuration(8000);
         logo.setAnimation(animation);
-        MediaPlayer mediaPlayer = MediaPlayer.create(this, R.raw.sfx);
+        MediaPlayer mediaPlayer = MediaPlayer.create(this, R.raw.oppening_app);
         mediaPlayer.start();
 
         new Handler().postDelayed(new Runnable() {
