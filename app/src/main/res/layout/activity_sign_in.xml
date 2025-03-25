@@ -20,7 +20,7 @@
         android:textSize="40dp" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/tiSignInUsername"
+        android:id="@+id/tiSignInEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -31,7 +31,7 @@
             android:layout_width="306dp"
             android:layout_height="wrap_content"
             android:background="#FFFFFF"
-            android:hint="Enter your username"
+            android:hint="Enter your email adress"
             android:text="agam@gmail.com"
             android:inputType="textEmailAddress" />
     </com.google.android.material.textfield.TextInputLayout>

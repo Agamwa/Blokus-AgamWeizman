@@ -75,6 +75,11 @@ public class GameActivity extends AppCompatActivity {
                 } else if (id == R.id.nav_board) {
                     replaceFragment(new BoardFragment());
                 } else if (id == R.id.nav_logout) {
+                    Intent intent1 = new Intent(GameActivity.this, HomeActivity.class);
+                    startActivity(intent1);
+                    Intent intent2 = new Intent(GameActivity.this, HomeActivity.class);
+                    intent2.setAction("STOP");
+                    startActivity(intent2);
 
                 }
 

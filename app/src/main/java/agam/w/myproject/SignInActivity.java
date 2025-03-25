@@ -12,20 +12,24 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.Firebase;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class SignInActivity extends AppCompatActivity {
 Button btnSignIn;
 TextInputLayout emailTi, passwordTiSignIn;
 FirebaseAuth auth;
+FirebaseFirestore db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
         auth = FirebaseAuth.getInstance();
-        emailTi = findViewById(R.id.tiSignInUsername);
+        db = FirebaseFirestore.getInstance();
+        emailTi = findViewById(R.id.tiSignInEmail);
         passwordTiSignIn = findViewById(R.id.tiSignInPassword);
         btnSignIn = findViewById(R.id.btnSignIn);
         btnSignIn.setOnClickListener(new View.OnClickListener() {
