@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/app_background"
+    android:background="@drawable/cut_background"
     android:orientation="vertical"
     tools:context=".RulesFragment">
 
@@ -12,7 +12,7 @@
         android:textColor="#17287C"
         android:layout_height="wrap_content"
         android:layout_marginLeft="150dp"
-        android:layout_marginTop="70dp"
+        android:layout_marginTop="30dp"
         android:fontFamily="@font/spicy_rice"
         android:text="Rules"
         android:textSize="40dp" />

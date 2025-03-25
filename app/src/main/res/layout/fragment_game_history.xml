@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@drawable/app_background"
+    android:background="@drawable/cut_background"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".GameHistoryFragment">
@@ -12,7 +12,7 @@
         android:layout_width="311dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="80dp"
-        android:layout_marginTop="70dp"
+        android:layout_marginTop="30dp"
         android:fontFamily="@font/spicy_rice"
         android:text="Game history"
         android:textColor="#17287C"
