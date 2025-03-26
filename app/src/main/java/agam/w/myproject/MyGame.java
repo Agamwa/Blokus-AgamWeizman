@@ -120,4 +120,8 @@ public class MyGame
     public Card[] getPlayer1() {
         return player1;
     }
+
+    public Card[] getPlayer2() {
+        return player2;
+    }
 }

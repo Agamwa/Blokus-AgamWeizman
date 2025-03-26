@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 
 import androidx.activity.EdgeToEdge;
@@ -42,7 +44,6 @@ Button btnSignIn, btnSignUp;
             startActivity(intent);
         }
     });
-
     Handler handler = new Handler(Looper.getMainLooper());
     handler.postDelayed(new Runnable() {
         @Override

@@ -18,34 +18,32 @@ public class BoardFragment extends Fragment implements View.OnClickListener{
 
     MyGame game = new MyGame();
     ImageView[] player_1;
-    ImageView[] player_2 = new ImageView[4];
+    ImageView[] player_2;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
 
 
-
         player_1 = new ImageView[4];
-        for (int i = 0; i < player_1.length ; i++)
-        {
-            // imageViewPlayer1_2
-            int id = getResources().getIdentifier("imageViewPlayer1_" + (i + 1), "id", getActivity().getPackageName());
-            player_1[i].findViewById(id);
-            // player_1[i].setOnClickListener(this);
-        }
-
-         /*
-        for (int i = 0; i < player_2.length ; i++)
-        {
-            // imageViewPlayer1_2
-            int id = getResources().getIdentifier("imageViewPlayer2_" + (i + 1), "id", getActivity().getPackageName());
-            player_2[i].findViewById(id);
-            player_2[i].setOnClickListener(this);
-        }
-*/
+        player_2 = new ImageView[4];
 
         View view = inflater.inflate(R.layout.fragment_board, container, false);
+        for (int i = 0; i < player_1.length; i++)
+        {
+            int id = getResources().getIdentifier("imageViewPlayer1_" + (i + 1), "id", getActivity().getPackageName());
+            player_1[i] = view.findViewById(id);
+            player_1[i].setOnClickListener(this);
+        }
+
+        for (int i = 0; i < player_2.length ; i++)
+        {
+            int id = getResources().getIdentifier("imageViewPlayer2_" + (i + 1), "id", getActivity().getPackageName());
+            player_2[i] = view.findViewById(id);
+            player_2[i].setOnClickListener(this);
+        }
+
+
         return view;
     }
 
@@ -53,26 +51,68 @@ public class BoardFragment extends Fragment implements View.OnClickListener{
     public void onClick(View v)
     {
         int id = v.getId();
-        if(id == R.id.imageViewPlayer1_1)
+        int index = 0;
+        if(id == R.id.imageViewPlayer1_2)
+            index = 1;
+        else if(id == R.id.imageViewPlayer1_3)
+            index = 2;
+        else if(id == R.id.imageViewPlayer1_4)
+            index = 3;
+        else if(id == R.id.imageViewPlayer2_1)
+            index = 4;
+        else if(id == R.id.imageViewPlayer2_2)
+            index = 5;
+        else if(id == R.id.imageViewPlayer2_3)
+            index = 6;
+        else if(id == R.id.imageViewPlayer2_4)
+            index = 7;
+
+        if(index < 4)
         {
-            Card c = game.getPlayer1()[0];
+            Card c = game.getPlayer1()[index];
             if(c instanceof SpecialCard)
             {
                 SpecialCard sp = (SpecialCard)c;
                 if(sp.getName().equals("replace"))
-                    player_1[0].setImageResource(R.drawable.card_replace);
+                    player_1[index].setImageResource(R.drawable.card_replace);
                 if(sp.getName().equals("draw_2"))
-                    player_1[0].setImageResource(R.drawable.card_draw2);
+                    player_1[index].setImageResource(R.drawable.card_draw2);
                 if(sp.getName().equals("peek"))
-                    player_1[0].setImageResource(R.drawable.card_peek);
+                    player_1[index].setImageResource(R.drawable.card_peek);
             }
             else
             {
                 int num = c.getNum();
                 int dr = getResources().getIdentifier("card_" + num, "drawable", getActivity().getPackageName());
-                player_1[0].setImageResource(dr);
+                player_1[index].setImageResource(dr);
 
             }
         }
+        else
+        {
+            index -= 4;
+            Card c = game.getPlayer2()[index];
+            if(c instanceof SpecialCard)
+            {
+                SpecialCard sp = (SpecialCard)c;
+                if(sp.getName().equals("replace"))
+                    player_2[index].setImageResource(R.drawable.card_replace);
+                if(sp.getName().equals("draw_2"))
+                    player_2[index].setImageResource(R.drawable.card_draw2);
+                if(sp.getName().equals("peek"))
+                    player_2[index].setImageResource(R.drawable.card_peek);
+            }
+            else
+            {
+                int num = c.getNum();
+                int dr = getResources().getIdentifier("card_" + num, "drawable", getActivity().getPackageName());
+                player_2[index].setImageResource(dr);
+
+            }
+        }
+
+
+
+
     }
 }
