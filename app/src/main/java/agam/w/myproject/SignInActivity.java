@@ -48,6 +48,7 @@ FirebaseFirestore db;
                         @Override
                         public void onSuccess(AuthResult authResult) {
                             Intent intent = new Intent(SignInActivity.this, GameActivity.class);
+                            Toast.makeText(SignInActivity.this, auth.getCurrentUser().getEmail(), Toast.LENGTH_SHORT).show();
                             startActivity(intent);
                         }
                     }).addOnFailureListener(new OnFailureListener() {

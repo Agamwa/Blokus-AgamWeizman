@@ -5,6 +5,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 import android.window.OnBackInvokedCallback;
 import android.window.OnBackInvokedDispatcher;
 
@@ -17,6 +18,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class GameActivity extends AppCompatActivity {
 
@@ -25,10 +27,16 @@ public class GameActivity extends AppCompatActivity {
     NavigationView navigationView;
     FrameLayout flMain;
 
+    FirebaseAuth auth;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        auth = FirebaseAuth.getInstance();
+        String s = auth.getCurrentUser().getEmail();
+        int etPos = s.indexOf('@');
+        String s2 = s.substring(0,etPos);
         setContentView(R.layout.activity_game);
         navigationView = findViewById(R.id.navigation_view);
         drawerLayout = findViewById(R.id.drawer_layout);
@@ -47,6 +55,8 @@ public class GameActivity extends AppCompatActivity {
         );
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
+        TextView tvUsername = navigationView.getHeaderView(0).findViewById(R.id.tvUsername);
+        tvUsername.setText("Hello "+s2+"!");
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -75,11 +85,11 @@ public class GameActivity extends AppCompatActivity {
                 } else if (id == R.id.nav_board) {
                     replaceFragment(new BoardFragment());
                 } else if (id == R.id.nav_logout) {
+                    Intent intent = new Intent(GameActivity.this, MusicService.class);
+                    intent.setAction("STOP");
+                    startService(intent);
                     Intent intent1 = new Intent(GameActivity.this, HomeActivity.class);
                     startActivity(intent1);
-                    Intent intent2 = new Intent(GameActivity.this, HomeActivity.class);
-                    intent2.setAction("STOP");
-                    startActivity(intent2);
 
                 }
 

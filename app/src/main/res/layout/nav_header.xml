@@ -13,10 +13,11 @@
         android:contentDescription="Profile Picture"/>
 
     <TextView
+        android:id="@+id/tvUsername"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Hello User!"
-        android:fontFamily="@font/titles"
+        android:fontFamily="@font/spicy_rice"
         android:textColor="@android:color/white"
         android:textSize="20sp"/>
 
