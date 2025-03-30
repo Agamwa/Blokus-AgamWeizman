@@ -3,20 +3,17 @@ package agam.w.myproject;
 import static android.view.View.INVISIBLE;
 import static android.view.View.VISIBLE;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.Button;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+import androidx.core.app.ActivityCompat;
 
 public class HomeActivity extends AppCompatActivity {
 Button btnSignIn, btnSignUp;
@@ -40,7 +37,7 @@ Button btnSignIn, btnSignUp;
     btnSignUp.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            Intent intent = new Intent(HomeActivity.this, signUpActivity.class);
+            Intent intent = new Intent(HomeActivity.this, SignUpActivity.class);
             startActivity(intent);
         }
     });
@@ -52,6 +49,5 @@ Button btnSignIn, btnSignUp;
             btnSignUp.setVisibility(VISIBLE);
         }
     }, 2000);
-
     }
 }
