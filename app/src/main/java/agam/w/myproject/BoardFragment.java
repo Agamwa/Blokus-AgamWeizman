@@ -9,6 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import java.util.Stack;
+
 
 public class BoardFragment extends Fragment implements View.OnClickListener{
 
@@ -16,6 +18,8 @@ public class BoardFragment extends Fragment implements View.OnClickListener{
     MyGame game = new MyGame();
     ImageView[] player_1;
     ImageView[] player_2;
+    Stack<ImageView> gameHeap;
+    ImageView heapTop;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -24,6 +28,34 @@ public class BoardFragment extends Fragment implements View.OnClickListener{
 
         player_1 = new ImageView[4];
         player_2 = new ImageView[4];
+        gameHeap = new Stack<>();
+
+
+          while (!game.getHeap().isEmpty())
+        {
+
+            Card top = game.getHeap().pop();
+            ImageView iv = new ImageView(getContext());
+            if(top instanceof SpecialCard)
+            {
+                SpecialCard sp = (SpecialCard)top;
+                if(sp.getName().equals("replace"))
+                   iv.setImageResource(R.drawable.card_replace);
+                if(sp.getName().equals("draw_2"))
+                    iv.setImageResource(R.drawable.card_draw2);
+                if(sp.getName().equals("peek"))
+                    iv.setImageResource(R.drawable.card_peek);
+                gameHeap.push(iv);
+            }
+            else
+            {
+             int num = top.getNum();
+                int draw = getResources().getIdentifier("card_" + num, "drawable", getActivity().getPackageName());
+                iv.setImageResource(draw);
+                gameHeap.push(iv);
+            }
+
+      }
 
         View view = inflater.inflate(R.layout.fragment_board, container, false);
         for (int i = 0; i < player_1.length; i++)
@@ -40,6 +72,9 @@ public class BoardFragment extends Fragment implements View.OnClickListener{
             player_2[i].setOnClickListener(this);
         }
 
+        heapTop = view.findViewById(R.id.imageViewHeap);
+        heapTop.setOnClickListener(this);
+
 
         return view;
     }
@@ -49,7 +84,9 @@ public class BoardFragment extends Fragment implements View.OnClickListener{
     {
         int id = v.getId();
         int index = 0;
-        if(id == R.id.imageViewPlayer1_2)
+        if(id == R.id.imageViewHeap)
+            heapTop = gameHeap.pop();
+        else if(id == R.id.imageViewPlayer1_2)
             index = 1;
         else if(id == R.id.imageViewPlayer1_3)
             index = 2;

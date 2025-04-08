@@ -58,7 +58,13 @@ public class MyGame
         this.player2CurrentCard = null;
     }
 
+    public Stack<Card> getHeap() {
+        return heap;
+    }
 
+    public Stack<Card> getStock() {
+        return stock;
+    }
 
     public void replace(int player, int pos, Card c)
     {
