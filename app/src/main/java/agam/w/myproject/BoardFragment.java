@@ -1,5 +1,6 @@
 package agam.w.myproject;
 
+import android.app.Dialog;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -7,7 +8,11 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import java.util.Stack;
 
@@ -18,7 +23,7 @@ public class BoardFragment extends Fragment implements View.OnClickListener{
     MyGame game = new MyGame();
     ImageView[] player_1;
     ImageView[] player_2;
-    Stack<ImageView> gameHeap;
+    Stack<Card> gameHeap;
     ImageView heapTop;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -28,34 +33,35 @@ public class BoardFragment extends Fragment implements View.OnClickListener{
 
         player_1 = new ImageView[4];
         player_2 = new ImageView[4];
-        gameHeap = new Stack<>();
+        gameHeap  = game.getHeap();
 
 
-          while (!game.getHeap().isEmpty())
-        {
 
-            Card top = game.getHeap().pop();
-            ImageView iv = new ImageView(getContext());
-            if(top instanceof SpecialCard)
-            {
-                SpecialCard sp = (SpecialCard)top;
-                if(sp.getName().equals("replace"))
-                   iv.setImageResource(R.drawable.card_replace);
-                if(sp.getName().equals("draw_2"))
-                    iv.setImageResource(R.drawable.card_draw2);
-                if(sp.getName().equals("peek"))
-                    iv.setImageResource(R.drawable.card_peek);
-                gameHeap.push(iv);
-            }
-            else
-            {
-             int num = top.getNum();
-                int draw = getResources().getIdentifier("card_" + num, "drawable", getActivity().getPackageName());
-                iv.setImageResource(draw);
-                gameHeap.push(iv);
-            }
-
-      }
+//          while (!game.getHeap().isEmpty())
+//        {
+//
+//            Card top = game.getHeap().pop();
+//            ImageView iv = new ImageView(getContext());
+//            if(top instanceof SpecialCard)
+//            {
+//                SpecialCard sp = (SpecialCard)top;
+//                if(sp.getName().equals("replace"))
+//                   iv.setImageResource(R.drawable.card_replace);
+//                if(sp.getName().equals("draw_2"))
+//                    iv.setImageResource(R.drawable.card_draw2);
+//                if(sp.getName().equals("peek"))
+//                    iv.setImageResource(R.drawable.card_peek);
+//                gameHeap.push(iv);
+//            }
+//            else
+//            {
+//             int num = top.getNum();
+//                int draw = getResources().getIdentifier("card_" + num, "drawable", getActivity().getPackageName());
+//                iv.setImageResource(draw);
+//                gameHeap.push(iv);
+//            }
+//
+//      }
 
         View view = inflater.inflate(R.layout.fragment_board, container, false);
         for (int i = 0; i < player_1.length; i++)
@@ -73,7 +79,16 @@ public class BoardFragment extends Fragment implements View.OnClickListener{
         }
 
         heapTop = view.findViewById(R.id.imageViewHeap);
-        heapTop.setOnClickListener(this);
+        heapTop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Card card = gameHeap.pop();
+                int is = fromCardToImageSource(card);
+                heapTop.setImageResource(is);
+                shoeDialog();
+            }
+        });
+
 
 
         return view;
@@ -84,9 +99,7 @@ public class BoardFragment extends Fragment implements View.OnClickListener{
     {
         int id = v.getId();
         int index = 0;
-        if(id == R.id.imageViewHeap)
-            heapTop = gameHeap.pop();
-        else if(id == R.id.imageViewPlayer1_2)
+        if(id == R.id.imageViewPlayer1_2)
             index = 1;
         else if(id == R.id.imageViewPlayer1_3)
             index = 2;
@@ -148,5 +161,53 @@ public class BoardFragment extends Fragment implements View.OnClickListener{
 
 
 
+    }
+
+    public int fromCardToImageSource(Card c)
+    {
+        if(c instanceof SpecialCard)
+        {
+            SpecialCard sp = (SpecialCard)c;
+            if(sp.getName().equals("replace"))
+                return R.drawable.card_replace;
+            if(sp.getName().equals("draw_2"))
+                return R.drawable.card_draw2;
+            return R.drawable.card_peek;
+        }
+        else
+        {
+            int num = c.getNum();
+            int dr = getResources().getIdentifier("card_" + num, "drawable", getActivity().getPackageName());
+            return dr;
+        }
+    }
+
+    public void shoeDialog()
+    {
+        Dialog dialog = new Dialog(getContext());
+        dialog.setCancelable(false);
+        dialog.setContentView(R.layout.choose_dialog);
+        dialog.setTitle("choose your next move");
+        RadioButton replaceRb = dialog.findViewById(R.id.radioButtonReplace);
+        RadioButton throwRb = dialog.findViewById(R.id.radioButtonThrow);
+        Button btn = dialog.findViewById(R.id.buttonDone);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(replaceRb.isChecked())
+                {
+                    Toast.makeText(getContext(), "replace", Toast.LENGTH_SHORT).show();
+                    dialog.dismiss();
+                }
+
+                else
+                {
+                    Toast.makeText(getContext(), "throw", Toast.LENGTH_SHORT).show();
+                    dialog.dismiss();
+                }
+
+            }
+        });
+        dialog.show();
     }
 }
