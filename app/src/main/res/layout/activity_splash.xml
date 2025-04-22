@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#CD8C9C"
+    android:background="#D091BC"
     android:orientation="vertical"
     tools:context=".SplashActivity">
 
@@ -16,5 +16,5 @@
         android:layout_height="320dp"
         android:layout_marginLeft="50dp"
         android:layout_marginTop="200dp"
-        app:srcCompat="@drawable/cat_logo_fix" />
+        app:srcCompat="@drawable/logo" />
 </LinearLayout>

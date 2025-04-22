@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -17,24 +18,42 @@
         android:text="Rules"
         android:textSize="40dp" />
 
-
-
-    <TextView
-        android:layout_width="388dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:background="#C4EBF0"
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_marginTop="25dp"
-        android:fontFamily="@font/ubuntu_light"
-        android:padding="12dp"
-        android:textStyle="bold"
-        android:text="Each player receives 4 cards. Without looking at them, they arrange them in a row face down. The remaining cards form a draw pile.
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:background="#C4EBF0">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="388dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/ubuntu_light"
+                android:lineSpacingMultiplier="1.2"
+                android:padding="10dp"
+                android:textStyle="bold"
+                android:text="Each player receives 4 cards.
+                Without looking at them, they arrange them in a row face down.
+ The remaining cards form a draw pile.
 On their turn, a player draws a card from the draw pile and decides whether to replace one of their own cards with it. Then, they place a card in the discard pile.
 Pay attention to action cards, as they can change moves and determine the game's outcome. Get rid of high-numbered cards and aim for lower ones!The round ends when a player believes the total value of their four cards is the lowest. They then declare out loud: Chatulkat! The player with the lowest total score at the end of all rounds wins the game. Enjoy playing!"
-        android:textAlignment="center"
-        android:textColor="#17287C"
-        android:textSize="20sp" />
+                android:textAlignment="center"
+                android:textColor="#17287C"
+                android:textSize="20sp" />
 
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/rules" />
+        </LinearLayout>
+
+    </ScrollView>
 
 
 </LinearLayout>
