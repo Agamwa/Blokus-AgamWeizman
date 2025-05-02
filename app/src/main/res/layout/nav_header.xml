@@ -4,7 +4,7 @@
     android:orientation="vertical"
     android:layout_height="200dp"
     android:gravity="center"
-    android:background="#D091BC">
+    android:background="#D5B2DC">
 
     <ImageView
         android:layout_width="80dp"

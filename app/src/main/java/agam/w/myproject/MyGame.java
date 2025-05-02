@@ -9,7 +9,8 @@ public class MyGame
 {
     private int turnNumber;
     private Card[] player1, player2;
-    private Stack<Card> heap, stock; // heap= ערימה שלוקחים ממנה קלפים, stock= ערימת זבל
+    private Stack<Card> heap;
+    private Stack<Card> stock; // heap= ערימה שלוקחים ממנה קלפים, stock= ערימת זבל
     private int sum1, sum2;
     private Card player1CurrentCard;
     private Card player2CurrentCard;
@@ -131,7 +132,8 @@ public class MyGame
     public void switchTurn() {
         if (currentPlayerTurn == 1)
             currentPlayerTurn = 2;
-        currentPlayerTurn = 1;
+        else
+            currentPlayerTurn = 1;
     }
 
     public Card[] getPlayer1() {
