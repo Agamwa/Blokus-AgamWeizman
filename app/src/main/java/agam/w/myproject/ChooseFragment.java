@@ -20,8 +20,9 @@ public class ChooseFragment extends Fragment {
                              Bundle savedInstanceState) {
 
       View view = inflater.inflate(R.layout.fragment_choose, container, false);
-      btnPracticeGame = view.findViewById(R.id.btnPracticeGame);
-      btnPracticeGame.setOnClickListener(new View.OnClickListener() {
+        btnTwoPlayers = view.findViewById(R.id.btnTwoPlayers);
+
+        btnTwoPlayers.setOnClickListener(new View.OnClickListener() {
           @Override
           public void onClick(View v) {
               replaceFragment(new BoardFragment());

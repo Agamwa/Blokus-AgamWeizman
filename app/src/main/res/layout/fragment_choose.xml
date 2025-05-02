@@ -19,24 +19,24 @@
         android:textSize="40dp" />
 
     <Button
-        android:id="@+id/btnPracticeGame"
+        android:id="@+id/btnTwoPlayers"
         android:layout_width="163dp"
         android:layout_height="50dp"
         android:layout_marginLeft="120dp"
         android:layout_marginTop="80dp"
         android:backgroundTint="#17287C"
         android:fontFamily="@font/titles"
-        android:text="Practice game"
+        android:text="Two Players "
         android:textSize="20dp" />
 
     <Button
-        android:id="@+id/btnTwoPlayers"
+        android:id="@+id/btnPracticeGame"
         android:layout_width="163dp"
         android:layout_height="50dp"
         android:layout_marginLeft="120dp"
         android:layout_marginTop="30dp"
         android:backgroundTint="#17287C"
         android:fontFamily="@font/titles"
-        android:text="Two players"
+        android:text="Practice Game"
         android:textSize="20dp" />
 </LinearLayout>

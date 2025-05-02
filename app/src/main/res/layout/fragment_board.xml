@@ -103,10 +103,10 @@
         android:id="@+id/imageViewHeap"
         android:layout_width="112dp"
         android:layout_height="181dp"
-        android:layout_marginTop="104dp"
+        android:layout_marginTop="144dp"
         android:src="@drawable/back"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.14"
+        app:layout_constraintEnd_toStartOf="@+id/layoutStock"
+        app:layout_constraintHorizontal_bias="0.223"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageViewPlayer2_1" />
 
@@ -114,29 +114,29 @@
         android:id="@+id/textViewTurn"
         android:layout_width="187dp"
         android:layout_height="47dp"
-        android:layout_marginTop="60dp"
         android:fontFamily="@font/spicy_rice"
         android:text="Player 1's turn"
         android:textColor="@color/blue"
         android:textSize="30dp"
         app:layout_constraintBottom_toTopOf="@+id/imageViewPlayer1_3"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.45"
+        app:layout_constraintHorizontal_bias="0.482"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageViewPlayer2_2"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toTopOf="@+id/imageViewPlayer2_2"
+        app:layout_constraintVertical_bias="0.301" />
 
     <LinearLayout
         android:id="@+id/layoutStock"
-        android:layout_width="105dp"
-        android:layout_height="164dp"
+        android:layout_width="119dp"
+        android:layout_height="186dp"
+        android:clickable="true"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@+id/imageViewPlayer1_4"
+        app:layout_constraintBottom_toBottomOf="@+id/imageViewHeap"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.434"
-        app:layout_constraintStart_toEndOf="@+id/imageViewHeap"
-        app:layout_constraintTop_toBottomOf="@+id/imageViewPlayer2_4"
-        app:layout_constraintVertical_bias="0.365" />
+        app:layout_constraintHorizontal_bias="0.859"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imageViewHeap"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/textView2"
@@ -167,6 +167,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageViewHeap"
         app:layout_constraintVertical_bias="0.798" />
+
+    <Button
+        android:id="@+id/btnFinish"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:backgroundTint="@color/blue"
+        android:fontFamily="@font/sansita_italic"
+        android:text="Rat a tat cat!"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.446"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewTurn" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
