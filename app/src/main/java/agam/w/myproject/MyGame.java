@@ -13,6 +13,8 @@ public class MyGame
     private int sum1, sum2;
     private Card player1CurrentCard;
     private Card player2CurrentCard;
+    private int currentPlayerTurn = 1; // 1 לשחקן 1, 2 לשחקן 2
+
 
     public MyGame()
     {
@@ -122,6 +124,15 @@ public class MyGame
         }
 
     }
+    public int getCurrentPlayerTurn() {
+        return currentPlayerTurn;
+    }
+
+    public void switchTurn() {
+        if (currentPlayerTurn == 1)
+            currentPlayerTurn = 2;
+        currentPlayerTurn = 1;
+    }
 
     public Card[] getPlayer1() {
         return player1;
@@ -129,5 +140,10 @@ public class MyGame
 
     public Card[] getPlayer2() {
         return player2;
+    }
+
+    public void addToStock(Card card)
+    {
+        this.stock.push(card);
     }
 }

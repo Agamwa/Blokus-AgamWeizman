@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
-<uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
-<uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 
     <application
         android:allowBackup="true"
@@ -14,23 +15,30 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyProject"
         tools:targetApi="31">
+        <receiver
+            android:name=".MyNotificationReceiver"
+            android:enabled="true"
+            android:exported="true">
+
+        </receiver>
+
         <service
             android:name=".MusicService"
             android:enabled="true"
-            android:exported="true"></service>
+            android:exported="true" />
 
         <activity
             android:name=".SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".GameActivity"
             android:exported="false" />
-
         <activity
             android:name=".SignInActivity"
             android:exported="false" />

@@ -6,6 +6,9 @@ public class Card
 {
     protected  int num;
 
+    public Card() {
+    }
+
     public Card(int num) {
         this.num = num;
     }

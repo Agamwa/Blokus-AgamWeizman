@@ -1,6 +1,10 @@
 package agam.w.myproject;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
+import android.icu.util.Calendar;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -19,6 +23,8 @@ import androidx.fragment.app.FragmentTransaction;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+
+import java.time.LocalDateTime;
 
 public class GameActivity extends AppCompatActivity {
 
@@ -114,6 +120,8 @@ public class GameActivity extends AppCompatActivity {
             getOnBackInvokedDispatcher().registerOnBackInvokedCallback(
                     OnBackInvokedDispatcher.PRIORITY_DEFAULT, callback);
         }
+
+       scheduleDailyNotification();
     }
 
     private void replaceFragment(Fragment fragment) {
@@ -123,6 +131,42 @@ public class GameActivity extends AppCompatActivity {
         transaction.commit();
     }
 
+    private void scheduleDailyNotification() {
+        Intent intent = new Intent(this, MyNotificationReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
+
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+
+        // for testing purposes
+        LocalDateTime now = LocalDateTime.now();
+        int hour = now.getHour();
+        int minute = now.getMinute();
+        int second = now.getSecond() + 5;
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(System.currentTimeMillis());
+//        calendar.set(Calendar.HOUR_OF_DAY, 13); //(13 AM)
+//        calendar.set(Calendar.MINUTE, 0);
+//        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.HOUR_OF_DAY, hour); //(13 AM)
+        calendar.set(Calendar.MINUTE, minute);
+        calendar.set(Calendar.SECOND, second);
+
+        // If the time is in the past, set it for the next day
+        if (calendar.before(Calendar.getInstance())) {
+            calendar.add(Calendar.DATE, 1);
+        }
+
+        alarmManager.setInexactRepeating(
+                AlarmManager.RTC_WAKEUP,
+                calendar.getTimeInMillis(),
+                AlarmManager.INTERVAL_DAY,
+                pendingIntent
+                );
+}
+
+
+
     @Override
     public void onBackPressed() {
         if (drawerLayout.isDrawerOpen(navigationView)) {
@@ -131,6 +175,5 @@ public class GameActivity extends AppCompatActivity {
             super.onBackPressed();
         }
     }
-
     }
 

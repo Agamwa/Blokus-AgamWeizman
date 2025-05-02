@@ -9,6 +9,8 @@
     tools:context=".BoardFragment">
 
 
+
+
     <ImageView
         android:id="@+id/imageViewPlayer2_1"
         android:layout_width="95dp"
@@ -49,6 +51,8 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/imageViewPlayer2_3"
         app:layout_constraintTop_toTopOf="@+id/imageViewPlayer2_3" />
+
+
 
     <ImageView
         android:id="@+id/imageViewPlayer1_1"
@@ -116,5 +120,21 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/imageViewStock" />
+
+    <TextView
+        android:id="@+id/textViewTurn"
+        android:layout_width="187dp"
+        android:layout_height="47dp"
+        android:layout_marginTop="60dp"
+        android:fontFamily="@font/spicy_rice"
+        android:text="Player 1's turn"
+        android:textColor="@color/blue"
+        android:textSize="30dp"
+        app:layout_constraintBottom_toTopOf="@+id/imageViewPlayer1_3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.45"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageViewPlayer2_2"
+        app:layout_constraintVertical_bias="0.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
