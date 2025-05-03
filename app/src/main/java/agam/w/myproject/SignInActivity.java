@@ -38,21 +38,25 @@ FirebaseFirestore db;
             {
                 String email = emailTi.getEditText().getText().toString();
                 String password = passwordTiSignIn.getEditText().getText().toString();
+                // Check if the email or password fields are empty
                 if(email.isEmpty() || password.isEmpty())
                 {
                     Toast.makeText(SignInActivity.this, "email and/or password can't empty", Toast.LENGTH_SHORT).show();
                 }
                 else
                 {
+                    // Sign in the user with Firebase Authentication
                     auth.signInWithEmailAndPassword(email,password).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                         @Override
                         public void onSuccess(AuthResult authResult) {
+                            // If sign-in is successful, navigate to GameActivity
                             Intent intent = new Intent(SignInActivity.this, GameActivity.class);
                             startActivity(intent);
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
+                            // If sign-in fails, show an error message
                             Toast.makeText(SignInActivity.this, "invalid email and/or password", Toast.LENGTH_SHORT).show();
 
                         }

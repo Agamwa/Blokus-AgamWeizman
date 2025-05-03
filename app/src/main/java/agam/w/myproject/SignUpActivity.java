@@ -57,8 +57,10 @@ public class SignUpActivity extends AppCompatActivity {
             {
                 String email = emailAddressTi.getEditText().getText().toString();
                 String password = passwordTi.getEditText().getText().toString();
+                // Collect user input and validate required fields
                 if(email.isEmpty() || password.isEmpty())
                 {
+                    // Show error if required fields are empty
                     Toast.makeText(SignUpActivity.this, "email and/or password can't be empty", Toast.LENGTH_SHORT).show();
                 }
                 else
@@ -74,10 +76,11 @@ public class SignUpActivity extends AppCompatActivity {
                                     Map<String, Object> data = new HashMap<>();
                                     data.put("username",username );
                                     data.put("password", password);
-                                    data.put("firstNme", firstName);
+                                    data.put("firstName", firstName);
                                     data.put("lastName", lastName);
                                     data.put("email", email);
                                     data.put("wins", "0");
+                                    // Save the user data into the Firestore "Users" collection
                                     db.collection("Users").document()
                                             .set(data, SetOptions.merge());
                                     DocumentReference docRef = db.collection("Users").document();
@@ -91,6 +94,7 @@ public class SignUpActivity extends AppCompatActivity {
                                 } catch (Exception e) {
                                     Toast.makeText(context, "Saving Document Falied!", Toast.LENGTH_SHORT).show();
                                 }
+                                // Start SignInActivity and pass the username to it
                                 Intent intent = new Intent(SignUpActivity.this, SignInActivity.class);
                                 intent.putExtra("username", usernameTi.getEditText().getText().toString());
                                 startActivity(intent);

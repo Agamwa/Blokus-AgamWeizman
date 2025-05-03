@@ -11,10 +11,11 @@ public class MyGame
     private Card[] player1, player2;
     private Stack<Card> heap;
     private Stack<Card> stock; // heap= ערימה שלוקחים ממנה קלפים, stock= ערימת זבל
-    private int sum1, sum2;
     private Card player1CurrentCard;
     private Card player2CurrentCard;
     private int currentPlayerTurn = 1; // 1 לשחקן 1, 2 לשחקן 2
+    private int player1Wins = 0;  // ניצחונות של שחקן 1
+    private int player2Wins = 0;
 
 
     public MyGame()
@@ -55,8 +56,6 @@ public class MyGame
             player2[i] = heap.pop();
         }
         this.stock = new Stack<>();
-        this.sum1 = 0;
-        this.sum2 = 0;
         this.player1CurrentCard = null;
         this.player2CurrentCard = null;
     }
@@ -82,6 +81,7 @@ public class MyGame
         this.stock.push(c);
 
     }
+
     // פעולה המקבלת את מספר השחקן ואת מקום הקלף שבחר ומחליפה את הקלף האחרון בערימת ה"זבל" אל מקום הקלף שהשחקן בחר.
     public void takeLastCardFromStock(int playerNum, int chosenPlace)
     {
@@ -147,5 +147,21 @@ public class MyGame
     public void addToStock(Card card)
     {
         this.stock.push(card);
+    }
+    public int getPlayer1Wins() {
+        return player1Wins;
+    }
+
+    public int getPlayer2Wins() {
+        return player2Wins;
+    }
+
+    // פעולה לעדכון הניצחון
+    public void updateWin(int winner) {
+        if (winner == 1) {
+            player1Wins++;
+        } else if (winner == 2) {
+            player2Wins++;
+        }
     }
 }

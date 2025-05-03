@@ -27,7 +27,6 @@ public class ChooseFragment extends Fragment {
           public void onClick(View v) {
               replaceFragment(new BoardFragment());
           }});
-      btnTwoPlayers = view.findViewById(R.id.btnTwoPlayers);
 
       return view;
     }

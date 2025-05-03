@@ -18,16 +18,21 @@ public class SplashActivity extends AppCompatActivity {
     ImageView logo;
 
     @Override
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+
+        // Load logo and apply animation
         logo = findViewById(R.id.imageView2);
         Animation animation = AnimationUtils.loadAnimation(this, R.anim.my_anim);
         animation.setDuration(8000);
         logo.setAnimation(animation);
+        // Play opening sound
         MediaPlayer mediaPlayer = MediaPlayer.create(this, R.raw.oppening_app);
         mediaPlayer.start();
 
+        // After 8 seconds, move to the HomeActivity
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {

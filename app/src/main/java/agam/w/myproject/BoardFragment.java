@@ -25,20 +25,20 @@ import java.util.Stack;
 public class BoardFragment extends Fragment implements View.OnClickListener {
 
 
-    MyGame game = new MyGame();//ובייקט המשחק הראשי שמנהל את מצב המשחק.
+    MyGame game = new MyGame(); // Main game object that manages the game state
     ImageView[] player_1;
     ImageView[] player_2;
-    Stack<Card> gameHeap;// ערימת הקלפים המרכזית של המשחק.
-    ImageView heapTop;//התמונה של הקלף העליון בערימה.
-    Card currentDrawnCard; // שומר את הקלף שנשלף מהערימה
-    Stack<Card>gameStock;
-    Button btnFinish;
-    private boolean isReplaceMode = false;
-    private boolean isPlayerClickEnabled = false;
-    private TextView turnTextView;
-    private LinearLayout layoutStock;
+    Stack<Card> gameHeap;// Central heap of cards
+    ImageView heapTop;  // ImageView showing the top card of the heap
+    Card currentDrawnCard;// Save the currently drawn card from the heap
+    Stack<Card>gameStock;//A pile of discarded cards
+    Button btnFinish; // Button to finish the game and declare the winner
+    private boolean isReplaceMode = false; // Indicates if replace mode is active
+    private boolean isPlayerClickEnabled = false; // Controls player card interaction
+    private TextView turnTextView;//  // TextView showing current turn
+    private LinearLayout layoutStock;// // Layout for the stock/draw pile
     private int cardWidth, cardHeight;
-    private int selectedSelfIndex = -1;
+    private int selectedSelfIndex = -1;// Index of selected player's card
     private boolean isWaitingForSecondPick = false;
     private boolean isReplaceSpecialActive = false;
     private boolean isPeekActive = false;
@@ -58,95 +58,56 @@ public class BoardFragment extends Fragment implements View.OnClickListener {
         btnFinish = view.findViewById(R.id.btnFinish);
         btnFinish.setEnabled(false);
         if (game.getCurrentPlayerTurn() == 1) {
-            btnFinish.setEnabled(true);  // שחקן 1 יכול ללחוץ על finish
+            btnFinish.setEnabled(true);
         } else if (game.getCurrentPlayerTurn() == 2) {
-            btnFinish.setEnabled(true);  // שחקן 2 יכול ללחוץ על finish
+            btnFinish.setEnabled(true);
         }
 
         btnFinish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (game.getCurrentPlayerTurn() == 1) {
-                    int sumPlayer1 = 0;
-                    int sumPlayer2 = 0;
+                int sumPlayer1 = 0;
+                int sumPlayer2 = 0;
 
-                    Card[] player1Cards = game.getPlayer1();
-                    Card[] player2Cards = game.getPlayer2();
-
-                    for (int i = 0; i < player1Cards.length; i++) {
-                        Card c = player1Cards[i];
-                        if (c instanceof SpecialCard) continue;
+                Card[] player1Cards = game.getPlayer1();
+                Card[] player2Cards = game.getPlayer2();
+                // Sum Player 1's cards, treating special cards as 10
+                for (Card c : player1Cards) {
+                    if (c instanceof SpecialCard) {
+                        sumPlayer1 += 10;
+                    } else {
                         sumPlayer1 += c.getNum();
                     }
-
-                    for (int i = 0; i < player2Cards.length; i++) {
-                        Card c = player2Cards[i];
-                        if (c instanceof SpecialCard) continue;
-                        sumPlayer2 += c.getNum();
-                    }
-
-                    String result;
-                    if (sumPlayer1 < sumPlayer2) {
-                        result = "Player 1 wins with " + sumPlayer1 + " vs " + sumPlayer2;
-                    } else if (sumPlayer2 < sumPlayer1) {
-                        result = "Player 2 wins with " + sumPlayer2 + " vs " + sumPlayer1;
-                    } else {
-                        result = "It's a tie! Both have " + sumPlayer1;
-                    }
-
-                    Toast.makeText(getContext(), result, Toast.LENGTH_LONG).show();
-                    for (int i = 0; i < player_1.length; i++) {
-                        Card c = game.getPlayer1()[i];
-                        player_1[i].setImageResource(fromCardToImageSource(c));
-                    }
-
-                    for (int i = 0; i < player_2.length; i++) {
-                        Card c = game.getPlayer2()[i];
-                        player_2[i].setImageResource(fromCardToImageSource(c));
-                    }
-
-                    heapTop.setEnabled(false);
-                } else if (game.getCurrentPlayerTurn() == 2) {
-                    int sumPlayer1 = 0;
-                    int sumPlayer2 = 0;
-
-                    Card[] player1Cards = game.getPlayer1();
-                    Card[] player2Cards = game.getPlayer2();
-
-                    for (int i = 0; i < player1Cards.length; i++) {
-                        Card c = player1Cards[i];
-                        if (c instanceof SpecialCard) continue;
-                        sumPlayer1 += c.getNum();
-                    }
-
-                    for (int i = 0; i < player2Cards.length; i++) {
-                        Card c = player2Cards[i];
-                        if (c instanceof SpecialCard) continue;
-                        sumPlayer2 += c.getNum();
-                    }
-
-                    String result;
-                    if (sumPlayer1 < sumPlayer2) {
-                        result = "Player 1 wins with " + sumPlayer1 + " vs " + sumPlayer2;
-                    } else if (sumPlayer2 < sumPlayer1) {
-                        result = "Player 2 wins with " + sumPlayer2 + " vs " + sumPlayer1;
-                    } else {
-                        result = "It's a tie! Both have " + sumPlayer1;
-                    }
-
-                    Toast.makeText(getContext(), result, Toast.LENGTH_LONG).show();
-                    for (int i = 0; i < player_1.length; i++) {
-                        Card c = game.getPlayer1()[i];
-                        player_1[i].setImageResource(fromCardToImageSource(c));
-                    }
-
-                    for (int i = 0; i < player_2.length; i++) {
-                        Card c = game.getPlayer2()[i];
-                        player_2[i].setImageResource(fromCardToImageSource(c));
-                    }
-
-                    heapTop.setEnabled(false);
                 }
+                // Sum Player 2's cards, treating special cards as 10
+                for (Card c : player2Cards) {
+                    if (c instanceof SpecialCard) {
+                        sumPlayer2 += 10;
+                    } else {
+                        sumPlayer2 += c.getNum();
+                    }
+                }
+                // Determine the result
+                String result;
+                if (sumPlayer1 < sumPlayer2) {
+                    result = "Player 1 wins with " + sumPlayer1 + " vs " + sumPlayer2;
+                } else if (sumPlayer2 < sumPlayer1) {
+                    result = "Player 2 wins with " + sumPlayer2 + " vs " + sumPlayer1;
+                } else {
+                    result = "It's a tie! Both have " + sumPlayer1;
+                }
+                // Show the result in a toast
+                Toast.makeText(getContext(), result, Toast.LENGTH_LONG).show();
+                // Update the card images for both players
+                for (int i = 0; i < player_1.length; i++) {
+                    player_1[i].setImageResource(fromCardToImageSource(player1Cards[i]));
+                }
+
+                for (int i = 0; i < player_2.length; i++) {
+                    player_2[i].setImageResource(fromCardToImageSource(player2Cards[i]));
+                }
+                // Disable drawing new cards
+                heapTop.setEnabled(false);
             }
         });
 
@@ -179,12 +140,13 @@ public class BoardFragment extends Fragment implements View.OnClickListener {
                 int is = fromCardToImageSource(currentDrawnCard);
                 heapTop.setImageResource(is);
                 heapTop.setEnabled(false);
-                cardWidth = heapTop.getLayoutParams().width; // שמירה על רוחב הקלף ב-heap
-                cardHeight = heapTop.getLayoutParams().height; // שמירה על גובה הקלף ב-heap
+                cardWidth = heapTop.getLayoutParams().width;
+                cardHeight = heapTop.getLayoutParams().height;
+                // Check if the drawn card is a special card
                 if (currentDrawnCard instanceof SpecialCard) {
                     SpecialCard special = (SpecialCard) currentDrawnCard;
                     String name = special.getName();
-
+                    // Handle specific special cards based on their name
                     if (name.equals("peek"))
                     {
                         handlePeekCard();
@@ -200,13 +162,14 @@ public class BoardFragment extends Fragment implements View.OnClickListener {
                        isPlayerClickEnabled = true;
                    }
                 } else {
+                    // If the card is not special, show a dialog after a short delay
                     Handler handler = new Handler();
                     handler.postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            shoeDialog();
+                            showDialog();
                         }
-                    }, 2000);
+                    }, 2000);// Delay of 2000 milliseconds (2 seconds)
                 }
             }
         });
@@ -217,12 +180,14 @@ public class BoardFragment extends Fragment implements View.OnClickListener {
     }
 
     @Override
-    public void onClick(View v)//מופעלת כאשר שחקן לוחץ על קלף לפי ה-ID של הלחיצה, מזוהה המיקום של הקלף. אם מדובר בקלף מיוחד (כמו "peek", "draw 2", או "replace"), מציגה את הקלף המתאים ומבצעת פעולה של החלפה או שימוש לפי ההיגיון שלך. אם הקלף רגיל, מציגה אותו בהתאם למספר שלו.
+    public void onClick(View v)
     {
+        // Check if the player is allowed to click (i.e., after drawing a card)
         if (!isPlayerClickEnabled) {
             Toast.makeText(getContext(), "Please draw a card from the heap first", Toast.LENGTH_SHORT).show();
             return;
         }
+        // Determine which card ImageView was clicked based on its ID
         int id = v.getId();
         int index = 0;
         if(id == R.id.imageViewPlayer1_2)
@@ -240,17 +205,19 @@ public class BoardFragment extends Fragment implements View.OnClickListener {
         else if(id == R.id.imageViewPlayer2_4)
             index = 7;
 
+        // Determine which player clicked based on the card index
         int clickedPlayer;
         if (index < 4) {
             clickedPlayer = 1;
         } else {
             clickedPlayer = 2;
         }
+        // Check again if player is allowed to click
         if (!isPlayerClickEnabled) {
             Toast.makeText(getContext(), "Please draw a card from the heap first", Toast.LENGTH_SHORT).show();
             return;
         }
-
+        // Handle Replace Special Card logic
         if (isReplaceSpecialActive) {
             int playerTurn = game.getCurrentPlayerTurn();
             int playerIndex;
@@ -260,8 +227,8 @@ public class BoardFragment extends Fragment implements View.OnClickListener {
             } else {
                 playerIndex = index - 4;
             }
-
             if (!isWaitingForSecondPick) {
+                // First pick - must be a card from the player's own side
                 boolean isSelectingOwnCard = (playerTurn == 1 && index < 4) || (playerTurn == 2 && index >= 4);
                 if (isSelectingOwnCard) {
                     selectedSelfIndex = playerIndex;
@@ -273,12 +240,13 @@ public class BoardFragment extends Fragment implements View.OnClickListener {
                     return;
                 }
             } else {
+                // Second pick - must be a card from the opponent's side
                 boolean isSelectingOpponentCard = (playerTurn == 1 && index >= 4) || (playerTurn == 2 && index < 4);
                 if (isSelectingOpponentCard) {
                     int opponentIndex;
                     Card[] playerCards;
                     Card[] opponentCards;
-
+                // Set up player/opponent cards and indices
                     if (playerTurn == 1) {
                         opponentIndex = index - 4;
                         playerCards = game.getPlayer1();
@@ -288,17 +256,15 @@ public class BoardFragment extends Fragment implements View.OnClickListener {
                         playerCards = game.getPlayer2();
                         opponentCards = game.getPlayer1();
                     }
-
+                    // Swap the selected cards if indices are valid
                     if (selectedSelfIndex >= 0 && selectedSelfIndex < playerCards.length
                             && opponentIndex >= 0 && opponentIndex < opponentCards.length) {
 
-                        // החלפת קלפים
                         Card temp = playerCards[selectedSelfIndex];
                         playerCards[selectedSelfIndex] = opponentCards[opponentIndex];
                         opponentCards[opponentIndex] = temp;
 
-                        // עדכון התמונות וההיגיון אחר כך
-
+                        // Update card images to reflect the swap
                         if (playerTurn == 1) {
                             player_1[selectedSelfIndex].setImageResource(fromCardToImageSource(game.getPlayer1()[selectedSelfIndex]));
                             player_2[opponentIndex].setImageResource(fromCardToImageSource(game.getPlayer2()[opponentIndex]));
@@ -307,7 +273,7 @@ public class BoardFragment extends Fragment implements View.OnClickListener {
                             player_1[opponentIndex].setImageResource(fromCardToImageSource(game.getPlayer1()[opponentIndex]));
                         }
 
-                        // להחזיר את התמונות ל-back לאחר 2 שניות
+                        // Hide cards again after 2 seconds
                         new Handler().postDelayed(() -> {
                             if (playerTurn == 1) {
                                 player_1[selectedSelfIndex].setImageResource(R.drawable.back);
@@ -316,20 +282,21 @@ public class BoardFragment extends Fragment implements View.OnClickListener {
                                 player_2[selectedSelfIndex].setImageResource(R.drawable.back);
                                 player_1[opponentIndex].setImageResource(R.drawable.back);
                             }
-                        }, 2000);
+                        }, 2000);// Delay of 2 seconds to allow player to see the cards
 
-                        // הודעת הצלחה
+                        // Success message
                         Toast.makeText(getContext(), "Cards switched!", Toast.LENGTH_SHORT).show();
 
-                        // איפוס משתנים
+                        // Reset states
                         selectedSelfIndex = -1;
                         isWaitingForSecondPick = false;
                         isReplaceSpecialActive = false;
                         isPlayerClickEnabled = false;
 
-                        // סיבוב משחק
+                       //Switch turn
                         game.switchTurn();
                         updateTurnText();
+                        // Reset heap image and drawn card
                         heapTop.setImageResource(R.drawable.back);
                         currentDrawnCard = null;
                     } else {
@@ -337,7 +304,7 @@ public class BoardFragment extends Fragment implements View.OnClickListener {
                         resetReplaceSpecialState();
                         return;
                     }
-
+                    // Re-enable heap interaction
                     heapTop.setEnabled(true);
                     return;
                 } else {
@@ -348,24 +315,28 @@ public class BoardFragment extends Fragment implements View.OnClickListener {
 
 
 
-
+    // Check if the player who clicked is the current player
         if (clickedPlayer != game.getCurrentPlayerTurn()) {
             Toast.makeText(getContext(), "Not your turn!", Toast.LENGTH_SHORT).show();
             return;
         }
-
+    // Handle Replace Mode from heap when replacing a card from player 2's side
         else if (isReplaceMode && index >= 4) {
             int realIndex = index - 4;
+            // Take the ols card from player2 and put it in the stock
             Card cardToStock = game.getPlayer2()[realIndex];
             addCardToStock(cardToStock);
+            // Replace the old card with the drawn card
             game.getPlayer2()[realIndex] = currentDrawnCard;
+            // Show the drawn card temporarily
             player_2[realIndex].setImageResource(fromCardToImageSource(currentDrawnCard));
             new Handler().postDelayed(() -> {
                 player_2[realIndex].setImageResource(R.drawable.back);
-            }, 2000);
-            Toast.makeText(getContext(), "Card replaced", Toast.LENGTH_SHORT).show();
+            }, 2000);// 2-second delay to let the player see the card
+            Toast.makeText(getContext(), "Card replaced", Toast.LENGTH_SHORT).show();// Notify the user and reset the state
             isReplaceMode = false;
             isPlayerClickEnabled = false;
+            // Switch turns and reset heap
             game.switchTurn();
             updateTurnText();
             heapTop.setImageResource(R.drawable.back);
@@ -373,7 +344,7 @@ public class BoardFragment extends Fragment implements View.OnClickListener {
             heapTop.setEnabled(true);
             return;
         }
-
+// Handle case when player is either replacing or taking from stock
         if ((isReplaceMode || isTakingFromStock) && index >= 4) {
             int realIndex = index - 4;
             Card cardToStock = game.getPlayer2()[realIndex];
@@ -397,21 +368,23 @@ public class BoardFragment extends Fragment implements View.OnClickListener {
             Card selectedCard;
 
             if (index < 4) {
+                // Player 1's card
                 realIndex = index;
                 selectedCardView = player_1[realIndex];
                 selectedCard = game.getPlayer1()[realIndex];
             } else {
+                // Player 2's card
                 realIndex = index - 4;
                 selectedCardView = player_2[realIndex];
                 selectedCard = game.getPlayer2()[realIndex];
             }
-
+            // Temporarily show the peeked card
             selectedCardView.setImageResource(fromCardToImageSource(selectedCard));
 
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    selectedCardView.setImageResource(R.drawable.back);
+                    selectedCardView.setImageResource(R.drawable.back);// Hide card after peek
                     isPeekActive = false;
                     isPlayerClickEnabled = false;
                     addCardToStock(currentDrawnCard);
@@ -421,7 +394,7 @@ public class BoardFragment extends Fragment implements View.OnClickListener {
                     updateTurnText();
                     heapTop.setEnabled(true);
                 }
-            }, 2000);
+            }, 2000); // Delay of 2 seconds
 
             return;
         }
@@ -439,16 +412,16 @@ public class BoardFragment extends Fragment implements View.OnClickListener {
             Toast.makeText(getContext(), "Card replaced", Toast.LENGTH_SHORT).show();
 
             if (isTakingFromStock) {
-                game.getStock().pop(); // באמת מסיר אותו רק אחרי שימוש
+                game.getStock().pop(); // Remove used stock card
             } else {
-                addCardToStock(cardToStock);
+                addCardToStock(cardToStock);// Return replaced card to stock
             }
 
             resetAfterMove();
             return;
         }
         if(index < 4)
-        {
+        { // Player 1
             Card c = game.getPlayer1()[index];
             if(c instanceof SpecialCard)
             {
@@ -462,6 +435,7 @@ public class BoardFragment extends Fragment implements View.OnClickListener {
                     player_1[index].setImageResource(R.drawable.card_draw2);
                 if(sp.getName().equals("peek"))
                     player_1[index].setImageResource(R.drawable.card_peek);
+                // Drop the card and draw a new one to replace
                 Card heapHead = this.gameHeap.pop();
                 Card carToDrop = fromImageSourseToCard(player_1[index]);
                 player_1[index].setImageResource(fromCardToImageSource(heapHead));
@@ -469,6 +443,7 @@ public class BoardFragment extends Fragment implements View.OnClickListener {
             }
             else
             {
+                // Player 2
                 int num = c.getNum();
                 int dr = getResources().getIdentifier("card_" + num, "drawable", getActivity().getPackageName());
                 player_1[index].setImageResource(dr);
@@ -477,8 +452,10 @@ public class BoardFragment extends Fragment implements View.OnClickListener {
         }
         else
         {
+            // player 2
             index -= 4;
             Card c = game.getPlayer2()[index];
+            // Check if the card is a special card
             if(c instanceof SpecialCard)
             {
                 SpecialCard sp = (SpecialCard)c;
@@ -491,8 +468,11 @@ public class BoardFragment extends Fragment implements View.OnClickListener {
             }
             else
             {
+                // If it's a normal card, get its number
                 int num = c.getNum();
+                //  Get the drawable ID for the corresponding card imag
                 int dr = getResources().getIdentifier("card_" + num, "drawable", getActivity().getPackageName());
+                // Set the image for the card based on its number
                 player_2[index].setImageResource(dr);
 
             }
@@ -503,7 +483,7 @@ public class BoardFragment extends Fragment implements View.OnClickListener {
 
     }
 
-    private Card fromImageSourseToCard(ImageView imageView)//מתרגמת תמונה של קלף (ImageView) חזרה לאובייקט Card
+    private Card fromImageSourseToCard(ImageView imageView)// Converts an ImageView (which shows a card image) back to a Card object)
     {
 
        Drawable drawable = imageView.getDrawable();
@@ -520,10 +500,13 @@ public class BoardFragment extends Fragment implements View.OnClickListener {
            return new SpecialCard("replace");
        }
        else
+           // Loop through regular cards (0–9)
            for (int i = 0; i <= 9; i++)
            {
+               // Get the drawable ID for "card_i"
                int id = getResources().getIdentifier("card_"+i, "drawable", getContext().getPackageName());
                Drawable dr = getResources().getDrawable(id);
+               // Compare drawable states to find a match
                if(drawable.getConstantState().equals(dr.getConstantState()))
                    return new Card(i);
            }
@@ -531,10 +514,11 @@ public class BoardFragment extends Fragment implements View.OnClickListener {
 
     }
 
-    public int fromCardToImageSource(Card c)//הופכת אובייקט Card למזהה תמונה (drawable id)
+    public int fromCardToImageSource(Card c)// Converts a Card object into the image resource ID (drawable)
     {
         if(c instanceof SpecialCard)
         {
+            // If the card is a special card, return its corresponding drawable
             SpecialCard sp = (SpecialCard)c;
             if(sp.getName().equals("replace"))
                 return R.drawable.card_replace;
@@ -544,16 +528,18 @@ public class BoardFragment extends Fragment implements View.OnClickListener {
         }
         else
         {
+            // For regular cards, return the appropriate drawable ID based on the number
             int num = c.getNum();
             int dr = getResources().getIdentifier("card_" + num, "drawable", getActivity().getPackageName());
             return dr;
         }
     }
-
-    public void shoeDialog()//פותחת תיבת דיאלוג לבחירת פעולה לאחר שליפת קלף מהערימה לזרוק אותו או להחליף אותו
+    // Displays a dialog to the player after drawing a card from the heap,
+    // allowing them to choose between replacing a card or throwing it away
+    public void showDialog()
     {
         Dialog dialog = new Dialog(getContext());
-        dialog.setCancelable(false);
+        dialog.setCancelable(false);// Dialog cannot be dismissed
         dialog.setContentView(R.layout.choose_dialog);
         dialog.setTitle("choose your next move");
         RadioButton replaceRb = dialog.findViewById(R.id.radioButtonReplace);
@@ -562,6 +548,7 @@ public class BoardFragment extends Fragment implements View.OnClickListener {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // If the user chooses to replace a card
                 if(replaceRb.isChecked())
                 {
 
@@ -577,44 +564,47 @@ public class BoardFragment extends Fragment implements View.OnClickListener {
                 }
                 else
                 {
+                    // If the user chooses to throw the card away
                     addCardToStock(currentDrawnCard);
-                    heapTop.setImageResource(R.drawable.back);
+                    heapTop.setImageResource(R.drawable.back);// Reset heap image
                     isPlayerClickEnabled = false;
-                    game.switchTurn();
-                    updateTurnText();
+                    game.switchTurn(); // Switch to next player's turn
+                    updateTurnText();// Update turn text display
                     dialog.dismiss();
-                    heapTop.setEnabled(true);
+                    heapTop.setEnabled(true);// Allow drawing next turn
                 }
 
             }
         });
         dialog.show();
     }
+    // Handles the logic for when a "peek" special card is played
     private void handlePeekCard() {
         Toast.makeText(getContext(), "Pick a card to peek at", Toast.LENGTH_SHORT).show();
         isPlayerClickEnabled = true;
-        isPeekActive = true;  // נכנס למצב peek
+        isPeekActive = true;
     }
 
-
+    // Updates the text display that shows which player's turn it is
     private void updateTurnText() {
        int current = game.getCurrentPlayerTurn();
        turnTextView.setText("Player " + current + "'s turn");
    }
-
+    // Adds a card to the visible stock area in the UI
     private void addCardToStock(Card card) {
         game.addToStock(card);
         layoutStock.removeAllViews();
+        // Create new ImageView for the added card
         ImageView cardView = new ImageView(getContext());
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(cardWidth, cardHeight);
         cardView.setLayoutParams(params);
         cardView.setImageResource(fromCardToImageSource(card));
-        layoutStock.addView(cardView);
+        layoutStock.addView(cardView); // Add to layout
     }
 
 
 
-
+// Handles the effect of the "draw2" card - player draws two more cards
     private void handleDraw2Card() {
         Toast.makeText(getContext(), "Drawing 2 more cards...", Toast.LENGTH_SHORT).show();
 
@@ -624,7 +614,7 @@ public class BoardFragment extends Fragment implements View.OnClickListener {
                 game.addToStock(extraCard);
             }
         }
-
+        // Wait 2 seconds before switching turn and resetting UI
         new Handler().postDelayed(() -> {
             game.switchTurn();
             updateTurnText();
@@ -632,10 +622,10 @@ public class BoardFragment extends Fragment implements View.OnClickListener {
             currentDrawnCard = null;
             isPlayerClickEnabled = false;
         }, 2000);
-        heapTop.setEnabled(true);
+        heapTop.setEnabled(true);// Allow next draw
     }
     private boolean isTakingFromStock = false;
-
+    // Lets the player take a card from the stock (instead of the heap)
     private void takeCardFromStock() {
         if (!game.getStock().isEmpty()) {
             currentDrawnCard = game.getStock().peek();
@@ -653,6 +643,7 @@ public class BoardFragment extends Fragment implements View.OnClickListener {
             Toast.makeText(getContext(), "Stock is empty or you already drew", Toast.LENGTH_SHORT).show();
         }
     }
+    // Resets game state after using a special "replace" card
     private void resetReplaceSpecialState() {
         isReplaceSpecialActive = false;
         isWaitingForSecondPick = false;
@@ -665,7 +656,7 @@ public class BoardFragment extends Fragment implements View.OnClickListener {
         updateTurnText();
     }
 
-
+    // Resets general game state after any move
     private void resetAfterMove() {
         isReplaceMode = false;
         isTakingFromStock = false;

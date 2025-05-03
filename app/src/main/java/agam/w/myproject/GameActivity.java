@@ -40,6 +40,7 @@ public class GameActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         auth = FirebaseAuth.getInstance();
+        // Getting the current user's email and parsing the username from it
         String s = auth.getCurrentUser().getEmail();
         int etPos = s.indexOf('@');
         String s2 = s.substring(0,etPos);
@@ -49,9 +50,11 @@ public class GameActivity extends AppCompatActivity {
         flMain = findViewById(R.id.frame_container);
         tbMain = findViewById(R.id.tbMain);
         setSupportActionBar(tbMain);
+        // Starting music service to play background music
         Intent intent = new Intent(getApplicationContext(), MusicService.class);
         intent.setAction("PLAY");
         startService(intent);
+        // Setting up the navigation drawer toggle
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this,
                 drawerLayout,
@@ -61,8 +64,10 @@ public class GameActivity extends AppCompatActivity {
         );
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
+        // Displaying the username in the navigation drawer header
         TextView tvUsername = navigationView.getHeaderView(0).findViewById(R.id.tvUsername);
         tvUsername.setText("Hello "+s2+"!");
+        // Handling navigation item selections
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -70,7 +75,7 @@ public class GameActivity extends AppCompatActivity {
                 if (id == R.id.nav_choose) {
                     replaceFragment(new ChooseFragment());
                 } else if (id == R.id.nav_game_history) {
-                    replaceFragment(new GameHistoryFragment());
+                    replaceFragment(new FragmentWinsTable(new MyGame()));
                 } else if (id == R.id.nav_rules) {
                     replaceFragment(new RulesFragment());
                 } else if (id == R.id.nav_volume) {

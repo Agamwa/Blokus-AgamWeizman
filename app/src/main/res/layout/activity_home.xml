@@ -14,12 +14,12 @@
         android:id="@+id/btnSignIn"
         android:layout_width="132dp"
         android:layout_height="50dp"
-        android:layout_marginTop="420dp"
         android:layout_marginLeft="130dp"
+        android:layout_marginTop="420dp"
         android:backgroundTint="#17287C"
         android:fontFamily="@font/titles"
         android:text="Sign In"
-        android:textSize="20dp"/>
+        android:textSize="20dp" />
 
     <Button
         android:id="@+id/btnSignUp"

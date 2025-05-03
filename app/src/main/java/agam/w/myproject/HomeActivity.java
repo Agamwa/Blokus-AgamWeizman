@@ -25,11 +25,14 @@ Button btnSignIn, btnSignUp;
 
     btnSignIn = findViewById(R.id.btnSignIn);
     btnSignUp = findViewById(R.id.btnSignUp);
+
+    // Initially hide the buttons
     btnSignIn.setVisibility(INVISIBLE);
     btnSignUp.setVisibility(INVISIBLE);
     btnSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // When Sign In is clicked, navigate to SignInActivity
                 Intent intent = new Intent(HomeActivity.this, SignInActivity.class);
                 startActivity(intent);
             }
@@ -37,17 +40,20 @@ Button btnSignIn, btnSignUp;
     btnSignUp.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+            // When Sign Up is clicked, navigate to SignUpActivity
             Intent intent = new Intent(HomeActivity.this, SignUpActivity.class);
             startActivity(intent);
         }
     });
+    // Create a handler to delay the appearance of buttons
     Handler handler = new Handler(Looper.getMainLooper());
     handler.postDelayed(new Runnable() {
         @Override
         public void run() {
+            // After 2 seconds, make both buttons visible
             btnSignIn.setVisibility(VISIBLE);
             btnSignUp.setVisibility(VISIBLE);
         }
-    }, 2000);
+    }, 2000);// Delay in milliseconds (2000 = 2 seconds)
     }
 }
