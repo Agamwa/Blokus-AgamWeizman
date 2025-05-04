@@ -32,7 +32,6 @@ public class GameActivity extends AppCompatActivity {
     MaterialToolbar tbMain;
     NavigationView navigationView;
     FrameLayout flMain;
-
     FirebaseAuth auth;
 
 
@@ -75,7 +74,7 @@ public class GameActivity extends AppCompatActivity {
                 if (id == R.id.nav_choose) {
                     replaceFragment(new ChooseFragment());
                 } else if (id == R.id.nav_game_history) {
-                    replaceFragment(new FragmentWinsTable(new MyGame()));
+                    replaceFragment(new WinsTableFragment(new MyGame()));
                 } else if (id == R.id.nav_rules) {
                     replaceFragment(new RulesFragment());
                 } else if (id == R.id.nav_volume) {

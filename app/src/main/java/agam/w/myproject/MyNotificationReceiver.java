@@ -14,7 +14,7 @@ import androidx.core.app.NotificationManagerCompat;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-
+// Called when the broadcast is received. It builds and shows a notification to the user.
 public class MyNotificationReceiver extends BroadcastReceiver {
     private static final String CHANNEL_ID = "daily_notification_channel";
 
@@ -29,13 +29,16 @@ public class MyNotificationReceiver extends BroadcastReceiver {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel channel = new NotificationChannel(
-                    "dailyNotify", "Daily Reminder", NotificationManager.IMPORTANCE_DEFAULT);
+                    "dailyNotify",// Channel ID used when building the notification
+                    "Daily Reminder",// Channel name visible in settings
+                    NotificationManager.IMPORTANCE_DEFAULT);
             NotificationManager manager = context.getSystemService(NotificationManager.class);
             manager.createNotificationChannel(channel);
         }
 
+        // Show the notification
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
-        notificationManager.notify(1001, builder.build());
+        notificationManager.notify(1001, builder.build());; // Display notification with unique ID
 
     }
 }

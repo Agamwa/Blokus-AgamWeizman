@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 
-public class FragmentWinsTable extends Fragment {
+public class WinsTableFragment extends Fragment {
     TextView player1WinsText,player2WinsText;
     private MyGame game;
     @Override
@@ -29,7 +29,7 @@ public class FragmentWinsTable extends Fragment {
         return view;
     }
 
-    public FragmentWinsTable(MyGame game) {
+    public WinsTableFragment(MyGame game) {
         this.game = game;
     }
 }
