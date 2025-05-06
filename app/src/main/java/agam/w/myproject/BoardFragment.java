@@ -8,6 +8,7 @@ import androidx.constraintlayout.widget.ConstraintHelper;
 import androidx.fragment.app.Fragment;
 
 import android.os.Handler;
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -71,34 +72,46 @@ public class BoardFragment extends Fragment implements View.OnClickListener {
 
                 Card[] player1Cards = game.getPlayer1();
                 Card[] player2Cards = game.getPlayer2();
-                // Sum Player 1's cards, treating special cards as 10
-                for (Card c : player1Cards) {
+
+                // חישוב התוצאה
+                for (int i = 0; i < player1Cards.length; i++) {
+                    Card c = player1Cards[i];
                     if (c instanceof SpecialCard) {
                         sumPlayer1 += 10;
                     } else {
                         sumPlayer1 += c.getNum();
                     }
                 }
-                // Sum Player 2's cards, treating special cards as 10
-                for (Card c : player2Cards) {
+
+                for (int i = 0; i < player2Cards.length; i++) {
+                    Card c = player2Cards[i];
                     if (c instanceof SpecialCard) {
                         sumPlayer2 += 10;
                     } else {
                         sumPlayer2 += c.getNum();
                     }
                 }
-                // Determine the result
+
+                // קביעת המנצח
                 String result;
                 if (sumPlayer1 < sumPlayer2) {
                     result = "Player 1 wins with " + sumPlayer1 + " vs " + sumPlayer2;
+                    game.updateWin(1);  // עדכון ניצחון לשחקן 1
                 } else if (sumPlayer2 < sumPlayer1) {
                     result = "Player 2 wins with " + sumPlayer2 + " vs " + sumPlayer1;
+                    game.updateWin(2);  // עדכון ניצחון לשחקן 2
                 } else {
                     result = "It's a tie! Both have " + sumPlayer1;
                 }
-                // Show the result in a toast
+
+                // הצגת התוצאה
                 Toast.makeText(getContext(), result, Toast.LENGTH_LONG).show();
-                // Update the card images for both players
+
+                // הצגת הלידרבורד
+                String leaderboard = game.getLeaderboard();
+                Toast.makeText(getContext(), leaderboard, Toast.LENGTH_LONG).show();
+
+                // עדכון התמונות של הקלפים
                 for (int i = 0; i < player_1.length; i++) {
                     player_1[i].setImageResource(fromCardToImageSource(player1Cards[i]));
                 }
@@ -106,10 +119,12 @@ public class BoardFragment extends Fragment implements View.OnClickListener {
                 for (int i = 0; i < player_2.length; i++) {
                     player_2[i].setImageResource(fromCardToImageSource(player2Cards[i]));
                 }
-                // Disable drawing new cards
+
+                // מונע מהשחקנים למשוך קלפים חדשים
                 heapTop.setEnabled(false);
             }
         });
+
 
 
         layoutStock.setOnClickListener(new View.OnClickListener() {
@@ -182,7 +197,7 @@ public class BoardFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View v)
     {
-        // Check if the player is allowed to click (i.e., after drawing a card)
+        // Check if the player is allowed to click
         if (!isPlayerClickEnabled) {
             Toast.makeText(getContext(), "Please draw a card from the heap first", Toast.LENGTH_SHORT).show();
             return;
@@ -222,13 +237,15 @@ public class BoardFragment extends Fragment implements View.OnClickListener {
             int playerTurn = game.getCurrentPlayerTurn();
             int playerIndex;
 
+            // הגדרת אינדקס השחקן בהתאם לתור
             if (playerTurn == 1) {
                 playerIndex = index;
             } else {
                 playerIndex = index - 4;
             }
+
             if (!isWaitingForSecondPick) {
-                // First pick - must be a card from the player's own side
+                // בחירה ראשונה - חייב להיות קלף מהצד של השחקן
                 boolean isSelectingOwnCard = (playerTurn == 1 && index < 4) || (playerTurn == 2 && index >= 4);
                 if (isSelectingOwnCard) {
                     selectedSelfIndex = playerIndex;
@@ -240,13 +257,14 @@ public class BoardFragment extends Fragment implements View.OnClickListener {
                     return;
                 }
             } else {
-                // Second pick - must be a card from the opponent's side
+                // בחירה שנייה - חייב להיות קלף מהצד של היריב
                 boolean isSelectingOpponentCard = (playerTurn == 1 && index >= 4) || (playerTurn == 2 && index < 4);
                 if (isSelectingOpponentCard) {
                     int opponentIndex;
                     Card[] playerCards;
                     Card[] opponentCards;
-                // Set up player/opponent cards and indices
+
+                    // הגדרת קלפים של השחקן והיריב בהתאם לתור
                     if (playerTurn == 1) {
                         opponentIndex = index - 4;
                         playerCards = game.getPlayer1();
@@ -256,47 +274,66 @@ public class BoardFragment extends Fragment implements View.OnClickListener {
                         playerCards = game.getPlayer2();
                         opponentCards = game.getPlayer1();
                     }
-                    // Swap the selected cards if indices are valid
-                    if (selectedSelfIndex >= 0 && selectedSelfIndex < playerCards.length
-                            && opponentIndex >= 0 && opponentIndex < opponentCards.length) {
 
+                    // בדיקה שהאינדקסים תקינים לפני ביצוע ההחלפה
+                    if (selectedSelfIndex >= 0 && selectedSelfIndex < playerCards.length &&
+                            opponentIndex >= 0 && opponentIndex < opponentCards.length) {
+
+                        // ביצוע החלפת קלפים
                         Card temp = playerCards[selectedSelfIndex];
                         playerCards[selectedSelfIndex] = opponentCards[opponentIndex];
                         opponentCards[opponentIndex] = temp;
 
-                        // Update card images to reflect the swap
+                        // עדכון תמונות הקלפים
                         if (playerTurn == 1) {
-                            player_1[selectedSelfIndex].setImageResource(fromCardToImageSource(game.getPlayer1()[selectedSelfIndex]));
-                            player_2[opponentIndex].setImageResource(fromCardToImageSource(game.getPlayer2()[opponentIndex]));
+                            if (player_1 != null && player_1[selectedSelfIndex] != null) {
+                                player_1[selectedSelfIndex].setImageResource(fromCardToImageSource(game.getPlayer1()[selectedSelfIndex]));
+                            }
+                            if (player_2 != null && player_2[opponentIndex] != null) {
+                                player_2[opponentIndex].setImageResource(fromCardToImageSource(game.getPlayer2()[opponentIndex]));
+                            }
                         } else {
-                            player_2[selectedSelfIndex].setImageResource(fromCardToImageSource(game.getPlayer2()[selectedSelfIndex]));
-                            player_1[opponentIndex].setImageResource(fromCardToImageSource(game.getPlayer1()[opponentIndex]));
+                            if (player_2 != null && player_2[selectedSelfIndex] != null) {
+                                player_2[selectedSelfIndex].setImageResource(fromCardToImageSource(game.getPlayer2()[selectedSelfIndex]));
+                            }
+                            if (player_1 != null && player_1[opponentIndex] != null) {
+                                player_1[opponentIndex].setImageResource(fromCardToImageSource(game.getPlayer1()[opponentIndex]));
+                            }
                         }
 
-                        // Hide cards again after 2 seconds
-                        new Handler().postDelayed(() -> {
+                        // הסתרת קלפים לאחר 2 שניות
+                        new Handler(Looper.getMainLooper()).postDelayed(() -> {
                             if (playerTurn == 1) {
-                                player_1[selectedSelfIndex].setImageResource(R.drawable.back);
-                                player_2[opponentIndex].setImageResource(R.drawable.back);
+                                if (player_1 != null && player_1[selectedSelfIndex] != null) {
+                                    player_1[selectedSelfIndex].setImageResource(R.drawable.back);
+                                }
+                                if (player_2 != null && player_2[opponentIndex] != null) {
+                                    player_2[opponentIndex].setImageResource(R.drawable.back);
+                                }
                             } else {
-                                player_2[selectedSelfIndex].setImageResource(R.drawable.back);
-                                player_1[opponentIndex].setImageResource(R.drawable.back);
+                                if (player_2 != null && player_2[selectedSelfIndex] != null) {
+                                    player_2[selectedSelfIndex].setImageResource(R.drawable.back);
+                                }
+                                if (player_1 != null && player_1[opponentIndex] != null) {
+                                    player_1[opponentIndex].setImageResource(R.drawable.back);
+                                }
                             }
-                        }, 2000);// Delay of 2 seconds to allow player to see the cards
+                        }, 2000); // השהייה של 2 שניות
 
-                        // Success message
+                        // הודעת הצלחה
                         Toast.makeText(getContext(), "Cards switched!", Toast.LENGTH_SHORT).show();
 
-                        // Reset states
+                        // איפוס משתנים למצב התחלתי
                         selectedSelfIndex = -1;
                         isWaitingForSecondPick = false;
                         isReplaceSpecialActive = false;
                         isPlayerClickEnabled = false;
 
-                       //Switch turn
+                        // מעבר לתור הבא
                         game.switchTurn();
                         updateTurnText();
-                        // Reset heap image and drawn card
+
+                        // איפוס תמונת ערימת הקלפים
                         heapTop.setImageResource(R.drawable.back);
                         currentDrawnCard = null;
                     } else {
@@ -304,7 +341,8 @@ public class BoardFragment extends Fragment implements View.OnClickListener {
                         resetReplaceSpecialState();
                         return;
                     }
-                    // Re-enable heap interaction
+
+                    // הפעלת מחדש את האפשרות ללחוץ על ערימת הקלפים
                     heapTop.setEnabled(true);
                     return;
                 } else {
@@ -315,7 +353,8 @@ public class BoardFragment extends Fragment implements View.OnClickListener {
 
 
 
-    // Check if the player who clicked is the current player
+
+        // Check if the player who clicked is the current player
         if (clickedPlayer != game.getCurrentPlayerTurn()) {
             Toast.makeText(getContext(), "Not your turn!", Toast.LENGTH_SHORT).show();
             return;
@@ -361,6 +400,7 @@ public class BoardFragment extends Fragment implements View.OnClickListener {
             resetAfterMove();
             return;
         }
+
 
         if (isPeekActive) {
             int realIndex;
@@ -601,9 +641,6 @@ public class BoardFragment extends Fragment implements View.OnClickListener {
         cardView.setImageResource(fromCardToImageSource(card));
         layoutStock.addView(cardView); // Add to layout
     }
-
-
-
 // Handles the effect of the "draw2" card - player draws two more cards
     private void handleDraw2Card() {
         Toast.makeText(getContext(), "Drawing 2 more cards...", Toast.LENGTH_SHORT).show();

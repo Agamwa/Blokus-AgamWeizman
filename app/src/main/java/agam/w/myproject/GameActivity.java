@@ -74,7 +74,7 @@ public class GameActivity extends AppCompatActivity {
                 if (id == R.id.nav_choose) {
                     replaceFragment(new ChooseFragment());
                 } else if (id == R.id.nav_game_history) {
-                    replaceFragment(new WinsTableFragment(new MyGame()));
+                    replaceFragment(new LeaderBoardFragment());
                 } else if (id == R.id.nav_rules) {
                     replaceFragment(new RulesFragment());
                 } else if (id == R.id.nav_volume) {

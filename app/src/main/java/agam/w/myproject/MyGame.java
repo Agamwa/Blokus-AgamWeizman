@@ -102,29 +102,6 @@ public class MyGame
             this.stock.push(c1);
         }
     }
-//פעולה שתתרחש בקבלת הקלף "הצץ"- היא מקבלת את מספר השחקן שקיבל את הקלף ואת מיקום הקלף שבחר להציץ בו ומראה לשחקן את הקלף שבחר .
-    public Card takeAPeak(int playerNum, int chosenPlace)
-    {
-        if(playerNum == 1)
-            return this.player1[chosenPlace];
-        return this.player2[chosenPlace];
-    }
-    // פעולה שתתרחש בקבלת הקלף "החלף"- היא מקבלת את השחקן שקיבל את הקלף, את המקום של הקלף של השחקן השני שירצה להחליף איתו ואת הקלף שירצה להחליף איתו מהשחקן השני. פעולה זו מבצעת את ההחלפה בין שני הקלפים.
-    public void change(int fromPlayer, int toPlayer, int fromPosition, int toPosition) {
-        if (fromPlayer == 1)
-        {
-            Card fromCard = this.player1[fromPosition];
-            this.player1[fromPlayer] = this.player2[toPosition];
-            this.player2[toPosition] = fromCard;
-        }
-        else
-        {
-            Card fromCard = this.player2[fromPosition];
-            this.player2[fromPlayer] = this.player1[toPosition];
-            this.player1[toPosition] = fromCard;
-        }
-
-    }
     public int getCurrentPlayerTurn() {
         return currentPlayerTurn;
     }
@@ -163,5 +140,10 @@ public class MyGame
         } else if (winner == 2) {
             player2Wins++;
         }
+    }
+
+    
+    public String getLeaderboard() {
+        return "Player 1: " + player1Wins + " wins\nPlayer 2: " + player2Wins + " wins";
     }
 }
