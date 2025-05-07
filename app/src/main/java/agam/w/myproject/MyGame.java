@@ -1,116 +1,27 @@
 package agam.w.myproject;
+
 import android.util.Log;
 
 import java.util.Collections;
 import java.util.Stack;
 
-
-public class MyGame
-{
-    private int turnNumber;
+public class MyGame {
     private Card[] player1, player2;
-    private Stack<Card> heap;
-    private Stack<Card> stock; // heap= ערימה שלוקחים ממנה קלפים, stock= ערימת זבל
-    private Card player1CurrentCard;
-    private Card player2CurrentCard;
-    private int currentPlayerTurn = 1; // 1 לשחקן 1, 2 לשחקן 2
-    private int player1Wins = 0;  // ניצחונות של שחקן 1
-    private int player2Wins = 0;
+    private Stack<Card> drawPile;
+    private Stack<Card> garbage;
+    private int score1 = 0, score2 = 0;
+    private String winner = "";
 
-
-    public MyGame()
-    {
-        this.turnNumber = 1;
-        heap = new Stack<>();
-        for (int i = 0; i < 3; i++)
-        {
-            heap.push(new SpecialCard("replace"));
-        }
-        for (int i = 0; i < 3; i++)
-        {
-            heap.push(new SpecialCard("draw 2"));
-        }
-        for (int i = 0; i < 3; i++)
-        {
-            heap.push(new SpecialCard("peek"));
-        }
-        for (int i = 0; i < 9; i++)
-        {
-            heap.push(new Card(9));
-        }
-        for (int i = 0; i <= 7; i++)
-        {
-            for (int j = 0; j < 4; j++)
-            {
-                heap.push(new Card(i));
-            }
-        }
-        Collections.shuffle(heap);
-        Log.d("cards", heap.toString());
-
-        this.player1 = new Card[4];
-        this.player2 = new Card[4];
-        for (int i = 0; i < 4; i++)
-        {
-            player1[i] = heap.pop();
-            player2[i] = heap.pop();
-        }
-        this.stock = new Stack<>();
-        this.player1CurrentCard = null;
-        this.player2CurrentCard = null;
+    public MyGame() {
+        initializeGame();
     }
 
-    public Stack<Card> getHeap() {
-        return heap;
+    public Stack<Card> getDrawPile() {
+        return drawPile;
     }
 
-    public Stack<Card> getStock() {
-        return stock;
-    }
-
-    public void replace(int player, int pos, Card c)
-    {
-        if(player == 1)
-            this.player1[pos] = c;
-        else
-            this.player2[pos] = c;
-    }
-    // זריקת קלף לערימת זבל
-    public void throwToStock(Card c)
-    {
-        this.stock.push(c);
-
-    }
-
-    // פעולה המקבלת את מספר השחקן ואת מקום הקלף שבחר ומחליפה את הקלף האחרון בערימת ה"זבל" אל מקום הקלף שהשחקן בחר.
-    public void takeLastCardFromStock(int playerNum, int chosenPlace)
-    {
-        if(!this.stock.empty())
-        {
-            Card c = this.stock.pop();
-            Card c1 = null;
-            if(playerNum == 1)
-            {
-                c1 = this.player1[chosenPlace];
-                this.player1[chosenPlace] = c;
-            }
-            else
-            {
-                c1 = this.player2[chosenPlace];
-                this.player2[chosenPlace] = c;
-            }
-            this.stock.push(c1);
-        }
-    }
-    public int getCurrentPlayerTurn() {
-        return currentPlayerTurn;
-    }
-
-    public void switchTurn() {
-        if (currentPlayerTurn == 1)
-            currentPlayerTurn = 2;
-        else
-            currentPlayerTurn = 1;
+    public Stack<Card> getGarbage() {
+        return garbage;
     }
 
     public Card[] getPlayer1() {
@@ -121,29 +32,126 @@ public class MyGame
         return player2;
     }
 
-    public void addToStock(Card card)
-    {
-        this.stock.push(card);
-    }
-    public int getPlayer1Wins() {
-        return player1Wins;
+    public int getScore1() {
+        return score1;
     }
 
-    public int getPlayer2Wins() {
-        return player2Wins;
+    public int getScore2() {
+        return score2;
     }
 
-    // פעולה לעדכון הניצחון
-    public void updateWin(int winner) {
-        if (winner == 1) {
-            player1Wins++;
-        } else if (winner == 2) {
-            player2Wins++;
+    public String getWinner() {
+        return winner;
+    }
+
+    // isDrawPile = false, takes from the garbage
+    public void placeInYourDeck(int player, boolean isDrawPile, int pos) {
+        Card chosenCard;
+        if (isDrawPile) {
+            chosenCard = drawPile.pop();
+        } else {
+            chosenCard = garbage.pop();
+        }
+        Card removedCard = replace(player, pos, chosenCard);
+        garbage.push(removedCard);
+    }
+
+    public Card replace(int player, int pos, Card c) {
+        Card temp;
+        if (player == 1) {
+            temp = player1[pos];
+            player1[pos] = c;
+        } else {
+            temp = player2[pos];
+            player2[pos] = c;
+        }
+        return temp;
+    }
+
+    public void throwToGarbage(Card c) {
+        garbage.push(c);
+    }
+
+    public void takeLastCardFromStock(int playerNum, int chosenPlace) {
+        if (!garbage.isEmpty()) {
+            Card c = garbage.pop();
+            Card oldCard;
+            if (playerNum == 1) {
+                oldCard = player1[chosenPlace];
+                player1[chosenPlace] = c;
+            } else {
+                oldCard = player2[chosenPlace];
+                player2[chosenPlace] = c;
+            }
+            garbage.push(oldCard);
         }
     }
 
-    
-    public String getLeaderboard() {
-        return "Player 1: " + player1Wins + " wins\nPlayer 2: " + player2Wins + " wins";
+    public void addToStock(Card card) {
+        garbage.push(card);
+    }
+
+
+    public void specialCardReplace(int pos1, int pos2) {
+        Card temp = player1[pos1];
+        player1[pos1] = player2[pos2];
+        player2[pos2] = temp;
+    }
+
+    public void specialCardDraw2(int pos1, int pos2) {
+        isDoubleTurn = true;
+    }
+
+
+    public String endGame() {
+        int sumPlayer1 = 0;
+        int sumPlayer2 = 0;
+        Card[] player1Cards = player1;
+        Card[] player2Cards = player2;
+        for (int i = 0; i < player1Cards.length; i++)
+            score1 += player1Cards[i].getNum();
+
+        for (int i = 0; i < player2Cards.length; i++)
+            score2 += player2Cards[i].getNum();
+
+        String result;
+        if (score1 < score2) {
+            result = "Player 1 wins with " + sumPlayer1 + " vs " + sumPlayer2;
+            winner = "Player 1";
+        } else if (score2 < score1) {
+            result = "Player 2 wins with " + sumPlayer2 + " vs " + sumPlayer1;
+            winner = "Player 2";
+        } else {
+            result = "It's a tie! Both have " + sumPlayer1;
+            winner = "Tie";
+        }
+        return result;
+    }
+
+    public boolean isPlayerTurn(int playerIndex) {
+        return currentPlayerTurn == playerIndex;
+    }
+
+    public void initializeGame() {
+        drawPile = new Stack<>();
+        for (int i = 0; i < 3; i++) drawPile.push(new SpecialCard("replace"));
+        for (int i = 0; i < 3; i++) drawPile.push(new SpecialCard("draw 2"));
+        for (int i = 0; i < 3; i++) drawPile.push(new SpecialCard("peek"));
+
+        for (int i = 0; i < 9; i++) drawPile.push(new Card(9));
+        for (int i = 0; i <= 7; i++)
+            for (int j = 0; j < 4; j++)
+                drawPile.push(new Card(i));
+
+        Collections.shuffle(drawPile);
+
+        player1 = new Card[4];
+        player2 = new Card[4];
+        for (int i = 0; i < 4; i++) {
+            player1[i] = drawPile.pop();
+            player2[i] = drawPile.pop();
+        }
+
+        garbage = new Stack<>();
     }
 }

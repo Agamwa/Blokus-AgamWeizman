@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -9,106 +9,67 @@
     tools:context=".BoardFragment">
 
 
+    <androidx.gridlayout.widget.GridLayout
+        android:layout_width="wrap_content"
+        android:id="@+id/gridLayoutPlayer2"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="16dp">
+
+        <ImageView
+            android:id="@+id/imageViewPlayer2_1"
+            android:layout_width="95dp"
+            android:layout_height="121dp"
+            android:src="@drawable/back"
+            app:layout_constraintEnd_toStartOf="@+id/imageViewPlayer2_2"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/imageViewPlayer2_2"
+            android:layout_width="95dp"
+            android:layout_height="121dp"
+            android:src="@drawable/back"
+            app:layout_constraintEnd_toStartOf="@+id/imageViewPlayer2_3"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/imageViewPlayer2_1"
+            app:layout_constraintTop_toTopOf="@+id/imageViewPlayer2_1" />
+
+        <ImageView
+            android:id="@+id/imageViewPlayer2_3"
+            android:layout_width="95dp"
+            android:layout_height="121dp"
+            android:src="@drawable/back"
+            app:layout_constraintEnd_toStartOf="@+id/imageViewPlayer2_4"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/imageViewPlayer2_2"
+            app:layout_constraintTop_toTopOf="@+id/imageViewPlayer2_2" />
+
+        <ImageView
+            android:id="@+id/imageViewPlayer2_4"
+            android:layout_width="95dp"
+            android:layout_height="121dp"
+            android:src="@drawable/back"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/imageViewPlayer2_3"
+            app:layout_constraintTop_toTopOf="@+id/imageViewPlayer2_3" />
 
 
-    <ImageView
-        android:id="@+id/imageViewPlayer2_1"
-        android:layout_width="95dp"
-        android:layout_height="121dp"
-        android:layout_marginTop="16dp"
-        android:src="@drawable/back"
-        app:layout_constraintEnd_toStartOf="@+id/imageViewPlayer2_2"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
-        android:id="@+id/imageViewPlayer2_2"
-        android:layout_width="95dp"
-        android:layout_height="121dp"
-        android:src="@drawable/back"
-        app:layout_constraintEnd_toStartOf="@+id/imageViewPlayer2_3"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/imageViewPlayer2_1"
-        app:layout_constraintTop_toTopOf="@+id/imageViewPlayer2_1" />
-
-    <ImageView
-        android:id="@+id/imageViewPlayer2_3"
-        android:layout_width="95dp"
-        android:layout_height="121dp"
-        android:src="@drawable/back"
-        app:layout_constraintEnd_toStartOf="@+id/imageViewPlayer2_4"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/imageViewPlayer2_2"
-        app:layout_constraintTop_toTopOf="@+id/imageViewPlayer2_2" />
-
-    <ImageView
-        android:id="@+id/imageViewPlayer2_4"
-        android:layout_width="95dp"
-        android:layout_height="121dp"
-        android:src="@drawable/back"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/imageViewPlayer2_3"
-        app:layout_constraintTop_toTopOf="@+id/imageViewPlayer2_3" />
+    </androidx.gridlayout.widget.GridLayout>
 
 
-
-    <ImageView
-        android:id="@+id/imageViewPlayer1_1"
-        android:layout_width="95dp"
-        android:layout_height="121dp"
-        android:layout_marginBottom="16dp"
-        android:src="@drawable/back"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/imageViewPlayer1_2"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <ImageView
-        android:id="@+id/imageViewPlayer1_2"
-        android:layout_width="95dp"
-        android:layout_height="121dp"
-        android:layout_marginBottom="16dp"
-        android:src="@drawable/back"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/imageViewPlayer1_3"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/imageViewPlayer1_1" />
-
-    <ImageView
-        android:id="@+id/imageViewPlayer1_3"
-        android:layout_width="95dp"
-        android:layout_height="121dp"
-        android:layout_marginBottom="16dp"
-        android:src="@drawable/back"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/imageViewPlayer1_4"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/imageViewPlayer1_2" />
-
-    <ImageView
-        android:id="@+id/imageViewPlayer1_4"
-        android:layout_width="95dp"
-        android:layout_height="121dp"
-        android:layout_marginBottom="16dp"
-        android:src="@drawable/back"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/imageViewPlayer1_3" />
-
-
-    <ImageView
-        android:id="@+id/imageViewHeap"
-        android:layout_width="112dp"
-        android:layout_height="181dp"
-        android:layout_marginTop="108dp"
-        android:src="@drawable/back"
-        app:layout_constraintEnd_toStartOf="@+id/layoutStock"
-        app:layout_constraintHorizontal_bias="0.172"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageViewPlayer2_1" />
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_marginLeft="20dp"
+        android:fontFamily="@font/sansita_italic"
+        android:text="player 2"
+        android:textColor="@color/blue"
+        android:textSize="20dp" />
 
     <TextView
         android:id="@+id/textViewTurn"
@@ -117,42 +78,42 @@
         android:fontFamily="@font/spicy_rice"
         android:text="Player 1's turn"
         android:textColor="@color/blue"
-        android:textSize="30dp"
-        app:layout_constraintBottom_toTopOf="@+id/imageViewPlayer1_3"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.482"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/imageViewPlayer2_2"
-        app:layout_constraintVertical_bias="0.301" />
+        android:layout_gravity="center"
+        android:textSize="30dp" />
 
-    <LinearLayout
-        android:id="@+id/layoutStock"
-        android:layout_width="119dp"
-        android:layout_height="186dp"
-        android:clickable="true"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="@+id/imageViewHeap"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.859"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/imageViewHeap"
-        app:layout_constraintVertical_bias="0.0" />
 
-    <TextView
-        android:id="@+id/textView2"
+    <Button
+        android:id="@+id/btnFinish"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="12dp"
+        android:backgroundTint="@color/blue"
         android:fontFamily="@font/sansita_italic"
-        android:text="player 2"
-        android:textColor="@color/blue"
-        android:textSize="20dp"
-        app:layout_constraintBottom_toTopOf="@+id/imageViewHeap"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.046"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageViewPlayer2_1"
-        app:layout_constraintVertical_bias="0.0" />
+        android:layout_gravity="center"
+        android:text="Rat a tat cat!" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="70dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/imageViewHeap"
+            android:layout_width="112dp"
+            android:layout_height="181dp"
+            android:layout_marginLeft="50dp"
+            android:src="@drawable/back" />
+
+        <LinearLayout
+            android:id="@+id/layoutStock"
+            android:layout_width="119dp"
+            android:layout_height="186dp"
+            android:layout_marginLeft="80dp"
+            android:clickable="true"
+            android:orientation="horizontal" />
+
+    </LinearLayout>
 
     <TextView
         android:id="@+id/textView4"
@@ -162,24 +123,41 @@
         android:fontFamily="@font/sansita_italic"
         android:text="player 1"
         android:textColor="@color/blue"
-        android:textSize="20dp"
-        app:layout_constraintBottom_toTopOf="@+id/imageViewPlayer1_1"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageViewHeap"
-        app:layout_constraintVertical_bias="0.798" />
+        android:textSize="20dp" />
 
-    <Button
-        android:id="@+id/btnFinish"
+    <androidx.gridlayout.widget.GridLayout
+        android:id="@+id/gridLayoutPlayer1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:backgroundTint="@color/blue"
-        android:fontFamily="@font/sansita_italic"
-        android:text="Rat a tat cat!"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.446"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewTurn" />
+        android:layout_marginTop="-40dp"
+        android:layout_gravity="center"
+        android:layout_marginBottom="16dp">
+
+        <ImageView
+            android:id="@+id/imageViewPlayer1_1"
+            android:layout_width="95dp"
+            android:layout_height="121dp"
+            android:src="@drawable/back" />
+
+        <ImageView
+            android:id="@+id/imageViewPlayer1_2"
+            android:layout_width="95dp"
+            android:layout_height="121dp"
+            android:src="@drawable/back" />
+
+        <ImageView
+            android:id="@+id/imageViewPlayer1_3"
+            android:layout_width="95dp"
+            android:layout_height="121dp"
+            android:src="@drawable/back" />
+
+        <ImageView
+            android:id="@+id/imageViewPlayer1_4"
+            android:layout_width="95dp"
+            android:layout_height="121dp"
+            android:src="@drawable/back" />
+
+    </androidx.gridlayout.widget.GridLayout>
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

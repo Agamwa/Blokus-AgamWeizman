@@ -19,7 +19,6 @@ public class SpecialCard extends Card {
         this.name = name;
     }
 
-
     @NonNull
     @Override
     public String toString()
