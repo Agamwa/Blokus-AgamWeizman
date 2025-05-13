@@ -41,10 +41,6 @@ public class MyGameManager {
         return winner;
     }
 
-    public int getCurrentPlayerTurn() {
-        return currentPlayerTurn;
-    }
-
     // isDrawPile = false, takes from the garbage
     public void placeInYourDeck(int player, boolean isDrawPile, int pos) {
         Card chosenCard;
@@ -99,14 +95,8 @@ public class MyGameManager {
         player2[pos2] = temp;
     }
 
-    public void specialCardDraw2(int pos1, int pos2) {
-        isDoubleTurn = true;
-    }
-
-
     public String endGame() {
-        int sumPlayer1 = 0;
-        int sumPlayer2 = 0;
+
         Card[] player1Cards = player1;
         Card[] player2Cards = player2;
         for (int i = 0; i < player1Cards.length; i++)
@@ -117,20 +107,16 @@ public class MyGameManager {
 
         String result;
         if (score1 < score2) {
-            result = "Player 1 wins with " + sumPlayer1 + " vs " + sumPlayer2;
+            result = "Player 1 wins with " + score1 + " vs " + score2;
             winner = "Player 1";
         } else if (score2 < score1) {
-            result = "Player 2 wins with " + sumPlayer2 + " vs " + sumPlayer1;
+            result = "Player 2 wins with " + score1 + " vs " + score2;
             winner = "Player 2";
         } else {
-            result = "It's a tie! Both have " + sumPlayer1;
+            result = "It's a tie! Both have " + score2;
             winner = "Tie";
         }
         return result;
-    }
-
-    public boolean isPlayerTurn(int playerIndex) {
-        return currentPlayerTurn == playerIndex;
     }
 
     public void initializeGame() {
@@ -154,7 +140,6 @@ public class MyGameManager {
         }
 
         garbage = new Stack<>();
-        this.currentPlayerTurn = 1;
     }
 
 }

@@ -1,6 +1,7 @@
 package agam.w.myproject;
 
 import android.app.AlarmManager;
+import android.app.AlertDialog;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
@@ -169,9 +170,7 @@ public class GameActivity extends AppCompatActivity {
                 AlarmManager.INTERVAL_DAY,
                 pendingIntent
                 );
-}
-
-
+    }
 
     @Override
     public void onBackPressed() {
@@ -181,5 +180,20 @@ public class GameActivity extends AppCompatActivity {
             super.onBackPressed();
         }
     }
+
+    public void showWinnerDialog(String winner) {
+        new AlertDialog.Builder(this)
+                .setCancelable(false)
+                .setTitle("Game Over")
+                .setMessage(winner)
+                .setPositiveButton("Close", (dialog, which) -> {
+                    dialog.dismiss();
+                    finish();
+                })
+                .setNegativeButton("Restart", (dialog, which) -> {
+                    dialog.dismiss();
+                })
+                .show();
     }
+}
 

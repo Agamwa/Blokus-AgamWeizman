@@ -26,6 +26,8 @@ public class MusicService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId)
     {
+        if(intent == null)
+            return START_STICKY;
         String action = intent.getAction();
         if(action.equals("STOP"))
             if(mediaPlayer.isPlaying())

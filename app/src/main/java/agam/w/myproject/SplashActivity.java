@@ -17,8 +17,9 @@ import androidx.core.view.WindowInsetsCompat;
 public class SplashActivity extends AppCompatActivity {
     ImageView logo;
 
-    @Override
+    private final int duration = 2000;
 
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
@@ -26,7 +27,7 @@ public class SplashActivity extends AppCompatActivity {
         // Load logo and apply animation
         logo = findViewById(R.id.imageView2);
         Animation animation = AnimationUtils.loadAnimation(this, R.anim.my_anim);
-        animation.setDuration(8000);
+        animation.setDuration(duration);
         logo.setAnimation(animation);
         // Play opening sound
         MediaPlayer mediaPlayer = MediaPlayer.create(this, R.raw.oppening_app);
@@ -39,7 +40,7 @@ public class SplashActivity extends AppCompatActivity {
                 Intent intent = new Intent(SplashActivity.this, HomeActivity.class);
                 startActivity(intent);
             }
-        },8000);
+        },duration);
 
     }
 }
