@@ -1,18 +1,15 @@
 package agam.w.myproject;
 
-import android.util.Log;
-
 import java.util.Collections;
 import java.util.Stack;
 
-public class MyGame {
+public class MyGameManager {
     private Card[] player1, player2;
     private Stack<Card> drawPile;
     private Stack<Card> garbage;
     private int score1 = 0, score2 = 0;
     private String winner = "";
-
-    public MyGame() {
+    public MyGameManager() {
         initializeGame();
     }
 
@@ -42,6 +39,10 @@ public class MyGame {
 
     public String getWinner() {
         return winner;
+    }
+
+    public int getCurrentPlayerTurn() {
+        return currentPlayerTurn;
     }
 
     // isDrawPile = false, takes from the garbage
@@ -153,5 +154,7 @@ public class MyGame {
         }
 
         garbage = new Stack<>();
+        this.currentPlayerTurn = 1;
     }
+
 }

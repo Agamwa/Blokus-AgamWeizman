@@ -77,6 +77,8 @@ public class GameActivity extends AppCompatActivity {
                     replaceFragment(new LeaderBoardFragment());
                 } else if (id == R.id.nav_rules) {
                     replaceFragment(new RulesFragment());
+                } else if (id==R.id.nav_tips) {
+                    replaceFragment(new TipsFragment());
                 } else if (id == R.id.nav_volume) {
                     if(item.getTitle().toString().equals("Turn on music")){
                         Intent intent = new Intent(getApplicationContext(), MusicService.class);

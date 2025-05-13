@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 public class RatATatCatViewModel extends ViewModel {
-    private MyGame myGame;
+    private MyGameManager myGame;
 
     public enum TurnState {
         SELECT_PILE,
@@ -33,7 +33,7 @@ public class RatATatCatViewModel extends ViewModel {
     private final MutableLiveData<Card> topDrawPileCardLiveData = new MutableLiveData<>();
     private final MutableLiveData<Card> topGarbageCardLiveData = new MutableLiveData<>();
     public RatATatCatViewModel() {
-        myGame = new MyGame();
+        myGame = new MyGameManager();
 
         currentPlayerTurnLiveData.setValue(1);
         turnStateLiveData.setValue(TurnState.SELECT_PILE);
@@ -49,6 +49,7 @@ public class RatATatCatViewModel extends ViewModel {
     }
 
     // implement turn function
+
 
     public LiveData<Integer> getCurrentPlayerTurnLiveData() {
         return currentPlayerTurnLiveData;

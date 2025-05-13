@@ -22,7 +22,7 @@ import java.util.Stack;
 public class BoardFragment extends Fragment implements View.OnClickListener {
 
 
-    MyGame game = new MyGame(); // Main game object that manages the game state
+    MyGameManager game = new MyGameManager(); // Main game object that manages the game state
     ImageView[] player_1;
     ImageView[] player_2;
     Stack<Card> gameHeap;// Central heap of cards
@@ -78,6 +78,7 @@ public class BoardFragment extends Fragment implements View.OnClickListener {
 
             }
         });
+
         for (int i = 0; i < player_1.length; i++)
         {
             int id = getResources().getIdentifier("imageViewPlayer1_" + (i + 1), "id", getActivity().getPackageName());
@@ -91,6 +92,7 @@ public class BoardFragment extends Fragment implements View.OnClickListener {
             player_2[i] = view.findViewById(id);
             player_2[i].setOnClickListener(this);
         }
+
 
         heapTop = view.findViewById(R.id.imageViewHeap);
         heapTop.setOnClickListener(new View.OnClickListener() {
