@@ -3,8 +3,11 @@ import android.app.Dialog;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
+
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.TimeUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +17,9 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 
 
 public class BoardFragment extends Fragment {
@@ -25,6 +31,10 @@ public class BoardFragment extends Fragment {
     ImageView drawTop;
     ImageView garbageTop;
     Button btnFinish; // Button to finish the game and declare the winner
+    TextView timer;
+    long timerDuration = TimeUnit.MINUTES.toMillis(1);
+    long ticksInteval = 10;
+    long millis = 1000;
     private TextView turnTextView; // TextView showing current turn
 //    private boolean isPlayerClickEnabled = false; // Controls player card interaction
 
@@ -37,6 +47,27 @@ public class BoardFragment extends Fragment {
 
         player_1 = new ImageView[4];
         player_2 = new ImageView[4];
+        timer = view.findViewById(R.id.timerTV);
+
+        long timerDurationMillis = TimeUnit.MINUTES.toMillis(30); // 30 דקות
+
+        new CountDownTimer(timerDurationMillis, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                long minutes = TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished);
+                long seconds = TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) % 60;
+
+                String timerText = String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds);
+                timer.setText(timerText);
+            }
+
+            @Override
+            public void onFinish() {
+                timer.setText("00:00");
+                Toast.makeText(getContext(), "Time Is Over!", Toast.LENGTH_LONG).show();
+                btnFinish.performClick(); // End game
+            }
+        }.start();
 
         turnTextView = view.findViewById(R.id.textViewTurn);
         btnFinish = view.findViewById(R.id.btnFinish);

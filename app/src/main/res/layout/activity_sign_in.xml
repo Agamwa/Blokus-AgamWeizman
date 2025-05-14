@@ -16,7 +16,7 @@
         android:layout_marginTop="70dp"
         android:fontFamily="@font/spicy_rice"
         android:text="Sign in"
-        android:textColor="#17287C"
+        android:textColor="@color/blue"
         android:textSize="40dp" />
 
     <com.google.android.material.textfield.TextInputLayout
@@ -58,7 +58,7 @@
         android:layout_height="50dp"
         android:layout_gravity="center"
         android:layout_marginTop="10dp"
-        android:backgroundTint="#17287C"
+        android:backgroundTint="@color/blue"
         android:fontFamily="@font/titles"
         android:text="Sign in"
         android:textSize="20dp" />

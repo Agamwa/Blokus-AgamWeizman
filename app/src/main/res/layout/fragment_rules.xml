@@ -31,6 +31,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
             <TextView
+                android:id="@+id/textTV"
                 android:layout_width="388dp"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/ubuntu_light"
@@ -43,8 +44,15 @@
 On their turn, a player draws a card from the draw pile and decides whether to replace one of their own cards with it. Then, they place a card in the discard pile.
 Pay attention to action cards, as they can change moves and determine the game's outcome. Get rid of high-numbered cards and aim for lower ones!The round ends when a player believes the total value of their four cards is the lowest. They then declare out loud: Chatulkat! The player with the lowest total score at the end of all rounds wins the game. Enjoy playing!"
                 android:textAlignment="center"
-                android:textColor="#17287C"
+                android:textColor="@color/blue"
                 android:textSize="20sp" />
+
+            <ImageButton
+                android:id="@+id/imageButtonSpeak"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@android:drawable/ic_btn_speak_now"
+                />
 
             <ImageView
                 android:id="@+id/imageView"

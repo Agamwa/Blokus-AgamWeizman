@@ -14,7 +14,7 @@
         android:id="@+id/gridLayoutPlayer2"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="16dp">
+        android:layout_marginTop="20dp">
 
         <ImageView
             android:id="@+id/imageViewPlayer2_1"
@@ -51,10 +51,12 @@
             android:layout_width="95dp"
             android:layout_height="121dp"
             android:src="@drawable/back"
+            app:layout_column="4"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/imageViewPlayer2_3"
-            app:layout_constraintTop_toTopOf="@+id/imageViewPlayer2_3" />
+            app:layout_constraintTop_toTopOf="@+id/imageViewPlayer2_3"
+            app:layout_row="0" />
 
 
     </androidx.gridlayout.widget.GridLayout>
@@ -154,7 +156,27 @@
             android:layout_height="121dp"
             android:src="@drawable/back" />
 
+
     </androidx.gridlayout.widget.GridLayout>
+
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="303dp"
+        android:layout_height="57dp"
+        android:layout_gravity="center"
+        android:src="@drawable/baseline_access_time_24" />
+
+
+    <TextView
+        android:id="@+id/timerTV"
+        android:layout_width="wrap_content"
+        android:layout_height="70dp"
+        android:layout_gravity="center"
+        android:fontFamily="@font/sansita_italic"
+        android:text="00:00"
+        android:textColor="@color/blue"
+        android:textSize="20dp" />
+
 
 
 </LinearLayout>

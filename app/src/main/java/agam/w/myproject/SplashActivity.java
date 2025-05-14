@@ -17,7 +17,7 @@ import androidx.core.view.WindowInsetsCompat;
 public class SplashActivity extends AppCompatActivity {
     ImageView logo;
 
-    private final int duration = 2000;
+    private final int duration = 5000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
