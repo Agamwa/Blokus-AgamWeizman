@@ -52,6 +52,7 @@ FirebaseFirestore db;
                             // If sign-in is successful, navigate to GameActivity
                             Intent intent = new Intent(SignInActivity.this, GameActivity.class);
                             startActivity(intent);
+                            finish();
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override

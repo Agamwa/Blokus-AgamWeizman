@@ -89,9 +89,9 @@ public class BoardFragment extends Fragment {
         drawTop.setOnClickListener(v -> {
             game.turn(SelectedPile.DRAW_PILE, -1, -1);
         });
+
         garbageTop.setOnClickListener(v -> {
-            if (game.garbageIsEmpty()) Toast.makeText(getContext(), "Garbage is empty", Toast.LENGTH_SHORT).show();
-            else game.turn(SelectedPile.GARBAGE_PILE, -1, -1);
+            game.turn(SelectedPile.GARBAGE_PILE, 4, 4);
         });
 
         for (int i = 0; i < player_1.length; i++)
@@ -151,6 +151,24 @@ public class BoardFragment extends Fragment {
                 garbageTop.setImageResource(fromCardToImageSource(card));
         });
 
+        game.getCanPlay().observe(getViewLifecycleOwner(), canPlay -> {
+            if (!canPlay) {
+                for (int i = 0; i < player_1.length; i++)
+                    player_1[i].setAlpha(0.5f);
+                for (int i = 0; i < player_2.length; i++)
+                    player_2[i].setAlpha(0.5f);
+                drawTop.setAlpha(0.5f);
+                garbageTop.setAlpha(0.5f);
+            } else {
+                for (int i = 0; i < player_1.length; i++)
+                    player_1[i].setAlpha(1f);
+                for (int i = 0; i < player_2.length; i++)
+                    player_2[i].setAlpha(1f);
+                drawTop.setAlpha(1f);
+                garbageTop.setAlpha(1f);
+            }
+        });
+
         return view;
     }
 
@@ -159,9 +177,9 @@ public class BoardFragment extends Fragment {
         if (c instanceof SpecialCard) {
             // If the card is a special card, return its corresponding drawable
             SpecialCard sp = (SpecialCard)c;
-            if(sp.getName().equals("replace"))
+            if(sp.getType() == SpecialCard.CardType.REPLACE)
                 return R.drawable.card_replace;
-            if(sp.getName().equals("draw2"))
+            if(sp.getType() == SpecialCard.CardType.DRAW2)
                 return R.drawable.card_draw2;
             return R.drawable.card_peek;
         } else {
@@ -170,6 +188,10 @@ public class BoardFragment extends Fragment {
             int dr = getResources().getIdentifier("card_" + num, "drawable", getActivity().getPackageName());
             return dr;
         }
+    }
+
+    public void init() {
+        game.init();
     }
 
 }

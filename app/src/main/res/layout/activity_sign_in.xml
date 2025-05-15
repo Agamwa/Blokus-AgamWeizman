@@ -32,7 +32,6 @@
             android:layout_height="wrap_content"
             android:background="#FFFFFF"
             android:hint="Enter your email adress"
-            android:text="agam@gmail.com"
             android:inputType="textEmailAddress" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -48,7 +47,7 @@
             android:layout_height="wrap_content"
             android:background="@color/white"
             android:hint="Enter your password"
-            android:text="16062007" />
+            android:inputType="textPassword" />
 
     </com.google.android.material.textfield.TextInputLayout>
 

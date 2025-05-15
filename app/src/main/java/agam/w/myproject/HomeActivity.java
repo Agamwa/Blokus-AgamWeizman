@@ -11,49 +11,103 @@ import android.os.Handler;
 import android.os.Looper;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
+
 public class HomeActivity extends AppCompatActivity {
-Button btnSignIn, btnSignUp;
+Button btnSignIn, btnSignUp, btnStart, btnLogout;
+TextView tvHelloMsg;
+FirebaseAuth mAuth;
+FirebaseUser currentUser;
+FirebaseFirestore db;
 
 @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-    btnSignIn = findViewById(R.id.btnSignIn);
-    btnSignUp = findViewById(R.id.btnSignUp);
+        mAuth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
+        currentUser = mAuth.getCurrentUser();
 
-    // Initially hide the buttons
-    btnSignIn.setVisibility(INVISIBLE);
-    btnSignUp.setVisibility(INVISIBLE);
-    btnSignIn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // When Sign In is clicked, navigate to SignInActivity
-                Intent intent = new Intent(HomeActivity.this, SignInActivity.class);
-                startActivity(intent);
-            }
+        btnSignIn = findViewById(R.id.btnSignIn);
+        btnSignUp = findViewById(R.id.btnSignUp);
+
+        tvHelloMsg = findViewById(R.id.tvHelloMsg);
+        btnStart = findViewById(R.id.btnStart);
+        btnLogout = findViewById(R.id.btnLogout);
+
+        // Initially hide the buttons
+        tvHelloMsg.setVisibility(View.GONE);
+        btnStart.setVisibility(View.GONE);
+        btnLogout.setVisibility(View.GONE);
+
+        btnSignIn.setVisibility(View.GONE);
+        btnSignUp.setVisibility(View.GONE);
+
+        btnSignIn.setOnClickListener(v -> {
+            // When Sign In is clicked, navigate to SignInActivity
+            Intent intent = new Intent(HomeActivity.this, SignInActivity.class);
+            startActivity(intent);
         });
-    btnSignUp.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
+
+        btnSignUp.setOnClickListener(v -> {
             // When Sign Up is clicked, navigate to SignUpActivity
             Intent intent = new Intent(HomeActivity.this, SignUpActivity.class);
             startActivity(intent);
-        }
-    });
-    // Create a handler to delay the appearance of buttons
-    Handler handler = new Handler(Looper.getMainLooper());
-    handler.postDelayed(new Runnable() {
-        @Override
-        public void run() {
-            // After 2 seconds, make both buttons visible
+        });
+
+        btnStart.setOnClickListener(v -> {
+            // When Start is clicked, navigate to GameActivity
+            Intent intent = new Intent(HomeActivity.this, GameActivity.class);
+            startActivity(intent);
+        });
+
+        btnLogout.setOnClickListener(v -> {
+            // When Logout is clicked, sign out the user
+            mAuth.signOut();
+            currentUser = null;
+            tvHelloMsg.setText("Hello Guest!");
+            tvHelloMsg.setVisibility(View.GONE);
+            btnStart.setVisibility(View.GONE);
+            btnLogout.setVisibility(View.GONE);
             btnSignIn.setVisibility(VISIBLE);
             btnSignUp.setVisibility(VISIBLE);
+        });
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        currentUser = mAuth.getCurrentUser();
+        if (currentUser == null) {
+            btnSignIn.setVisibility(View.VISIBLE);
+            btnSignUp.setVisibility(View.VISIBLE);
+            tvHelloMsg.setVisibility(View.GONE);
+            btnStart.setVisibility(View.GONE);
+            btnLogout.setVisibility(View.GONE);
+        } else {
+            db.collection("Users").document(currentUser.getUid()).get()
+                            .addOnSuccessListener(documentSnapshot -> {
+                                if (documentSnapshot.exists())
+                                    tvHelloMsg.setText("Hello " + documentSnapshot.get("firstName").toString() + "!");
+                            }).addOnFailureListener(e -> {
+                                tvHelloMsg.setText("Hello " + currentUser.getEmail() + "!");
+                            });
+            tvHelloMsg.setVisibility(VISIBLE);
+            btnStart.setVisibility(VISIBLE);
+            btnLogout.setVisibility(VISIBLE);
+
+            btnSignIn.setVisibility(View.GONE);
+            btnSignUp.setVisibility(View.GONE);
         }
-    }, 2000);// Delay in milliseconds (2000 = 2 seconds)
+
     }
 }

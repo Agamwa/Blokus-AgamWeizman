@@ -35,6 +35,8 @@ public class GameActivity extends AppCompatActivity {
     FrameLayout flMain;
     FirebaseAuth auth;
 
+    Fragment currentFragment;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -191,6 +193,8 @@ public class GameActivity extends AppCompatActivity {
                     finish();
                 })
                 .setNegativeButton("Restart", (dialog, which) -> {
+                    currentFragment = getSupportFragmentManager().findFragmentById(R.id.frame_container);
+                    ((BoardFragment) currentFragment).init();
                     dialog.dismiss();
                 })
                 .show();

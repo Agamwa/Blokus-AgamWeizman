@@ -3,27 +3,31 @@ package agam.w.myproject;
 import androidx.annotation.NonNull;
 
 public class SpecialCard extends Card {
+    public enum CardType {
+        PEEK,
+        DRAW2,
+        REPLACE,
+    }
+    private CardType type;
 
-    private String name;
-
-    public SpecialCard(String name) {
+    public SpecialCard(CardType type) {
         super(10);
-        this.name = name;
+        this.type = type;
     }
 
-    public String getName() {
-        return name;
+    public CardType getType() {
+        return type;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setType(CardType type) {
+        this.type = type;
     }
 
     @NonNull
     @Override
     public String toString()
     {
-        return "[ " + this.num + " - " + this.name + " ]";
+        return "[ " + this.num + " - " + this.type + " ]";
     }
 
 }

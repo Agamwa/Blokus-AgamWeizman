@@ -7,15 +7,16 @@
     android:layout_height="match_parent"
     android:background="@drawable/home_background"
     android:orientation="vertical"
-    tools:context=".HomeActivity">
+    tools:context=".HomeActivity"
+    android:paddingTop="420dp"
+    android:layout_gravity="center"
+    android:gravity="center">
 
 
     <Button
         android:id="@+id/btnSignIn"
         android:layout_width="132dp"
         android:layout_height="50dp"
-        android:layout_marginLeft="130dp"
-        android:layout_marginTop="420dp"
         android:backgroundTint="@color/blue"
         android:fontFamily="@font/titles"
         android:text="Sign In"
@@ -26,9 +27,34 @@
         android:layout_width="132dp"
         android:layout_height="50dp"
         android:backgroundTint="@color/blue"
-        android:layout_marginLeft="130dp"
         android:fontFamily="@font/titles"
         android:text="Sign up"
+        android:textSize="20dp"/>
+
+    <TextView
+        android:id="@+id/tvHelloMsg"
+        android:layout_width="132dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/titles"
+        android:text="Hello Guest!"
+        android:textSize="20dp" />
+
+    <Button
+        android:id="@+id/btnStart"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:backgroundTint="@color/blue"
+        android:fontFamily="@font/titles"
+        android:text="Start the Game!"
+        android:textSize="20dp"/>
+
+    <Button
+        android:id="@+id/btnLogout"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:backgroundTint="@color/blue"
+        android:fontFamily="@font/titles"
+        android:text="Logout"
         android:textSize="20dp"/>
 
 

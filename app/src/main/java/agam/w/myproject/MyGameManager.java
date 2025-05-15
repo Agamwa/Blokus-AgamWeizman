@@ -121,9 +121,9 @@ public class MyGameManager {
 
     public void initializeGame() {
         drawPile = new Stack<>();
-        for (int i = 0; i < 3; i++) drawPile.push(new SpecialCard("replace"));
-        for (int i = 0; i < 3; i++) drawPile.push(new SpecialCard("draw 2"));
-        for (int i = 0; i < 3; i++) drawPile.push(new SpecialCard("peek"));
+        for (int i = 0; i < 3; i++) drawPile.push(new SpecialCard(SpecialCard.CardType.REPLACE));
+        for (int i = 0; i < 3; i++) drawPile.push(new SpecialCard(SpecialCard.CardType.DRAW2));
+        for (int i = 0; i < 3; i++) drawPile.push(new SpecialCard(SpecialCard.CardType.PEEK));
 
         for (int i = 0; i < 9; i++) drawPile.push(new Card(9));
         for (int i = 0; i <= 7; i++)
