@@ -30,7 +30,8 @@
             android:id="@+id/imageView3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:srcCompat="@drawable/game" />
+            android:layout_marginTop="27dp"
+            app:srcCompat="@drawable/welcomeimage" />
     </FrameLayout>
 
     </LinearLayout>

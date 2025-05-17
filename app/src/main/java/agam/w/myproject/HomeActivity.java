@@ -31,14 +31,11 @@ FirebaseFirestore db;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
         currentUser = mAuth.getCurrentUser();
-
         btnSignIn = findViewById(R.id.btnSignIn);
         btnSignUp = findViewById(R.id.btnSignUp);
-
         tvHelloMsg = findViewById(R.id.tvHelloMsg);
         btnStart = findViewById(R.id.btnStart);
         btnLogout = findViewById(R.id.btnLogout);
@@ -47,10 +44,8 @@ FirebaseFirestore db;
         tvHelloMsg.setVisibility(View.GONE);
         btnStart.setVisibility(View.GONE);
         btnLogout.setVisibility(View.GONE);
-
         btnSignIn.setVisibility(View.GONE);
         btnSignUp.setVisibility(View.GONE);
-
         btnSignIn.setOnClickListener(v -> {
             // When Sign In is clicked, navigate to SignInActivity
             Intent intent = new Intent(HomeActivity.this, SignInActivity.class);
@@ -104,7 +99,6 @@ FirebaseFirestore db;
             tvHelloMsg.setVisibility(VISIBLE);
             btnStart.setVisibility(VISIBLE);
             btnLogout.setVisibility(VISIBLE);
-
             btnSignIn.setVisibility(View.GONE);
             btnSignUp.setVisibility(View.GONE);
         }

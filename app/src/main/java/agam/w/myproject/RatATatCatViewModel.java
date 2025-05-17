@@ -290,17 +290,13 @@ public class RatATatCatViewModel extends ViewModel {
     public void init() {
         myGame = new MyGameManager();
         myGame.getDrawPile().push(new SpecialCard(SpecialCard.CardType.DRAW2));
-
         currentPlayerTurnLiveData.setValue(1);
         turnStateLiveData.setValue(TurnState.SELECT_PILE);
-
         selectedPileLiveData.setValue(null);
         selecetedCardPlayer1.setValue(null);
         selecetedCardPlayer2.setValue(null);
-
         topDrawPileCardLiveData.setValue(myGame.getDrawPile().peek());
         topGarbageCardLiveData.setValue(null);
-
         canPlay.setValue(true);
     }
 }
