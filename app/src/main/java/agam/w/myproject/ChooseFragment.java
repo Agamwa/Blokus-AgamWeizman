@@ -13,7 +13,10 @@ import android.widget.Button;
 
 
 public class ChooseFragment extends Fragment {
-    Button btnPracticeGame, btnTwoPlayers;
+    // Button to start practice game (currently not used)
+    Button btnPracticeGame;
+    // Button to start two-player game mode
+    Button  btnTwoPlayers;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -24,6 +27,7 @@ public class ChooseFragment extends Fragment {
 
         btnTwoPlayers.setOnClickListener(new View.OnClickListener() {
           @Override
+          // Replace the current fragment with the game board (BoardFragment)
           public void onClick(View v) {
               replaceFragment(new BoardFragment());
           }});
@@ -31,6 +35,7 @@ public class ChooseFragment extends Fragment {
       return view;
     }
 
+    // This method replaces the current fragment with the one passed as an argument
     public void replaceFragment(Fragment fragment) {
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();

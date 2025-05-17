@@ -27,11 +27,13 @@ public class MusicService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId)
     {
         if(intent == null)
-            return START_STICKY;
+            return START_STICKY; // If intent is null, keep service running
         String action = intent.getAction();
+        // If the action is STOP, stop the media player if it is playing
         if(action.equals("STOP"))
             if(mediaPlayer.isPlaying())
                 mediaPlayer.stop();
+        // If the action is PLAY, play the music
         if(action.equals("PLAY")) {
             if (mediaPlayer.isPlaying())
                 mediaPlayer.stop();
@@ -45,16 +47,16 @@ public class MusicService extends Service {
         return START_STICKY;
 
     }
-
+    // Service will be restarted if terminated by the system
     private int getSongResouceId(String name){
         String charName = name.toLowerCase().replaceAll("\\s+" , "_");
         int resId = this.getResources().getIdentifier(charName,"raw",this.getPackageName());
         if(resId != 0){
-            return resId;
+            return resId;// Return the resource ID if found
         }
-        return R.drawable.music_icon;
+        return R.drawable.music_icon;// Return default icon resource if not found
     }
-
+    // Called when the service is destroyed, release MediaPlayer resources
     @Override
     public void onDestroy() {
         super.onDestroy();

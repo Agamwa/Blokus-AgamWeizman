@@ -46,24 +46,25 @@ FirebaseFirestore db;
         btnLogout.setVisibility(View.GONE);
         btnSignIn.setVisibility(View.GONE);
         btnSignUp.setVisibility(View.GONE);
+    // Sign In button click - navigate to SignInActivity
         btnSignIn.setOnClickListener(v -> {
             // When Sign In is clicked, navigate to SignInActivity
             Intent intent = new Intent(HomeActivity.this, SignInActivity.class);
             startActivity(intent);
         });
-
+    // Sign Up button click - navigate to SignUpActivity
         btnSignUp.setOnClickListener(v -> {
             // When Sign Up is clicked, navigate to SignUpActivity
             Intent intent = new Intent(HomeActivity.this, SignUpActivity.class);
             startActivity(intent);
         });
-
+// Start Game button click - navigate to GameActivity
         btnStart.setOnClickListener(v -> {
             // When Start is clicked, navigate to GameActivity
             Intent intent = new Intent(HomeActivity.this, GameActivity.class);
             startActivity(intent);
         });
-
+    // Logout button click - sign the user out and reset UI
         btnLogout.setOnClickListener(v -> {
             // When Logout is clicked, sign out the user
             mAuth.signOut();
@@ -81,21 +82,26 @@ FirebaseFirestore db;
     @Override
     protected void onStart() {
         super.onStart();
+        // Get current user (in case it changed while app was paused)
         currentUser = mAuth.getCurrentUser();
         if (currentUser == null) {
+            // No user is logged in - show Sign In and Sign Up buttons
             btnSignIn.setVisibility(View.VISIBLE);
             btnSignUp.setVisibility(View.VISIBLE);
             tvHelloMsg.setVisibility(View.GONE);
             btnStart.setVisibility(View.GONE);
             btnLogout.setVisibility(View.GONE);
+            // User is logged in - fetch their first name from Firestore
         } else {
             db.collection("Users").document(currentUser.getUid()).get()
                             .addOnSuccessListener(documentSnapshot -> {
                                 if (documentSnapshot.exists())
                                     tvHelloMsg.setText("Hello " + documentSnapshot.get("firstName").toString() + "!");
                             }).addOnFailureListener(e -> {
+                        // If failed to fetch name, use email instead
                                 tvHelloMsg.setText("Hello " + currentUser.getEmail() + "!");
                             });
+            // Show personalized UI
             tvHelloMsg.setVisibility(VISIBLE);
             btnStart.setVisibility(VISIBLE);
             btnLogout.setVisibility(VISIBLE);

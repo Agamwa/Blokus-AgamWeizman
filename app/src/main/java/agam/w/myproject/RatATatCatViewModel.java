@@ -225,10 +225,8 @@ public class RatATatCatViewModel extends ViewModel {
     // isDrawPile = false, takes from the garbage
     public void placeInYourDeck(int player, boolean isDrawPile, int pos) {
         myGame.placeInYourDeck(player, isDrawPile, pos);
-
         topDrawPileCardLiveData.setValue(myGame.getDrawPile().peek());
         topGarbageCardLiveData.setValue(myGame.getGarbage().peek());
-
         selectedPileLiveData.setValue(null);
     }
 

@@ -56,7 +56,7 @@ public class SignUpActivity extends AppCompatActivity {
         btnSignUp.setOnClickListener(v -> {
             String email = emailAddressTi.getEditText().getText().toString();
             String password = passwordTi.getEditText().getText().toString();
-            // Collect user input and validate required fields
+            // Validate required fields
             if(email.isEmpty() || password.isEmpty()) {
                 // Show error if required fields are empty
                 Toast.makeText(SignUpActivity.this, "email and/or password can't be empty", Toast.LENGTH_SHORT).show();

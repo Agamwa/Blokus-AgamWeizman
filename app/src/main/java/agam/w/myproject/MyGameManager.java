@@ -4,52 +4,67 @@ import java.util.Collections;
 import java.util.Stack;
 
 public class MyGameManager {
+    // Arrays representing each player's hand of cards
     private Card[] player1, player2;
+    // Stack representing the draw pile (deck)
     private Stack<Card> drawPile;
+    // Stack representing the discard pile (garbage)
     private Stack<Card> garbage;
+    // Scores of player 1 and player 2
     private int score1 = 0, score2 = 0;
+    // Stores the winner of the game as a String
     private String winner = "";
+
+    // Constructor initializes the game state
     public MyGameManager() {
         initializeGame();
     }
 
+    // Getter for the draw pile stack
     public Stack<Card> getDrawPile() {
         return drawPile;
     }
 
+    // Getter for the discard pile stack
     public Stack<Card> getGarbage() {
         return garbage;
     }
 
+    // Getter for player 1's hand
     public Card[] getPlayer1() {
         return player1;
     }
 
+    // Getter for player 2's hand
     public Card[] getPlayer2() {
         return player2;
     }
 
+    // Getter for player 1's score
     public int getScore1() {
         return score1;
     }
 
+    // Getter for player 2's score
     public int getScore2() {
         return score2;
     }
 
+    // Getter for the winner string
     public String getWinner() {
         return winner;
     }
 
-    // isDrawPile = false, takes from the garbage
     public void placeInYourDeck(int player, boolean isDrawPile, int pos) {
         Card chosenCard;
         if (isDrawPile) {
-            chosenCard = drawPile.pop();
+            chosenCard = drawPile.pop(); // Take top card from draw pile
         } else {
-            chosenCard = garbage.pop();
+            chosenCard = garbage.pop();  // Take top card from garbage pile
         }
+        // Replace the card at the specified position with the chosen card
         Card removedCard = replace(player, pos, chosenCard);
+        // Put the removed card into the garbage pile
         garbage.push(removedCard);
     }
 
@@ -65,9 +80,11 @@ public class MyGameManager {
         return temp;
     }
 
+    // Adds a card to the garbage (discard) pile
     public void throwToGarbage(Card c) {
         garbage.push(c);
     }
+
 
     public void takeLastCardFromStock(int playerNum, int chosenPlace) {
         if (!garbage.isEmpty()) {
@@ -84,6 +101,7 @@ public class MyGameManager {
         }
     }
 
+    // Adds a card to the garbage pile (alias method)
     public void addToStock(Card card) {
         garbage.push(card);
     }
@@ -95,13 +113,17 @@ public class MyGameManager {
         player2[pos2] = temp;
     }
 
+
     public String endGame() {
 
         Card[] player1Cards = player1;
         Card[] player2Cards = player2;
+
+        // Sum the values of player 1's cards
         for (int i = 0; i < player1Cards.length; i++)
             score1 += player1Cards[i].getNum();
 
+        // Sum the values of player 2's cards
         for (int i = 0; i < player2Cards.length; i++)
             score2 += player2Cards[i].getNum();
 
@@ -110,7 +132,7 @@ public class MyGameManager {
             result = "Player 1 wins with " + score1 + " vs " + score2;
             winner = "Player 1";
         } else if (score2 < score1) {
-            result = "Player 2 wins with " + score1 + " vs " + score2;
+            result = "Player 2 wins with " + score2 + " vs " + score1;
             winner = "Player 2";
         } else {
             result = "It's a tie! Both have " + score2;
@@ -119,19 +141,27 @@ public class MyGameManager {
         return result;
     }
 
+
     public void initializeGame() {
         drawPile = new Stack<>();
+        // Add 3 special REPLACE cards
         for (int i = 0; i < 3; i++) drawPile.push(new SpecialCard(SpecialCard.CardType.REPLACE));
+        // Add 3 special DRAW2 cards
         for (int i = 0; i < 3; i++) drawPile.push(new SpecialCard(SpecialCard.CardType.DRAW2));
+        // Add 3 special PEEK cards
         for (int i = 0; i < 3; i++) drawPile.push(new SpecialCard(SpecialCard.CardType.PEEK));
 
+        // Add cards with value 9 (4 copies)
         for (int i = 0; i < 9; i++) drawPile.push(new Card(9));
+        // Add cards with values 0 through 7, 4 copies each
         for (int i = 0; i <= 7; i++)
             for (int j = 0; j < 4; j++)
                 drawPile.push(new Card(i));
 
+        // Shuffle the draw pile to randomize card order
         Collections.shuffle(drawPile);
 
+        // Initialize player hands and deal 4 cards each from draw pile
         player1 = new Card[4];
         player2 = new Card[4];
         for (int i = 0; i < 4; i++) {
@@ -139,6 +169,7 @@ public class MyGameManager {
             player2[i] = drawPile.pop();
         }
 
+        // Initialize empty garbage pile
         garbage = new Stack<>();
     }
 

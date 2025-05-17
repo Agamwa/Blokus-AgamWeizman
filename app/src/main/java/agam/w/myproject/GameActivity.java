@@ -101,6 +101,7 @@ public class GameActivity extends AppCompatActivity {
                 } else if (id == R.id.nav_board) {
                     replaceFragment(new BoardFragment());
                 } else if (id == R.id.nav_logout) {
+                    // Stop music and return to home screen
                     Intent intent = new Intent(GameActivity.this, MusicService.class);
                     intent.setAction("STOP");
                     startService(intent);
@@ -108,8 +109,7 @@ public class GameActivity extends AppCompatActivity {
                     startActivity(intent1);
 
                 }
-
-
+                // Close drawer after selection
                 drawerLayout.closeDrawers();
                 return true;
             }
@@ -133,7 +133,7 @@ public class GameActivity extends AppCompatActivity {
 
        scheduleDailyNotification();
     }
-
+    // Helper method to switch fragments in the layout
     private void replaceFragment(Fragment fragment) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.frame_container, fragment);
@@ -141,6 +141,7 @@ public class GameActivity extends AppCompatActivity {
         transaction.commit();
     }
 
+    // Sets a daily notification using AlarmManager
     private void scheduleDailyNotification() {
         Intent intent = new Intent(this, MyNotificationReceiver.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
@@ -183,7 +184,7 @@ public class GameActivity extends AppCompatActivity {
             super.onBackPressed();
         }
     }
-
+    // Display game result with options to restart or exit
     public void showWinnerDialog(String winner) {
         new AlertDialog.Builder(this)
                 .setCancelable(false)

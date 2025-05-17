@@ -49,7 +49,7 @@ FirebaseFirestore db;
                     auth.signInWithEmailAndPassword(email,password).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                         @Override
                         public void onSuccess(AuthResult authResult) {
-                            // If sign-in is successful, navigate to GameActivity
+                            // On successful login, navigate to GameActivity
                             Intent intent = new Intent(SignInActivity.this, GameActivity.class);
                             startActivity(intent);
                             finish();
@@ -57,7 +57,7 @@ FirebaseFirestore db;
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            // If sign-in fails, show an error message
+                            // On login failure, show error message
                             Toast.makeText(SignInActivity.this, "invalid email and/or password", Toast.LENGTH_SHORT).show();
 
                         }
