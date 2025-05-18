@@ -104,8 +104,8 @@ public class GameActivity extends AppCompatActivity {
                     Intent intent = new Intent(GameActivity.this, MusicService.class);
                     intent.setAction("STOP");
                     startService(intent);
-                    Intent intent1 = new Intent(GameActivity.this, HomeActivity.class);
-                    startActivity(intent1);
+                    FirebaseAuth.getInstance().signOut();
+                    finish();
 
                 }
                 // Close drawer after selection
@@ -130,12 +130,15 @@ public class GameActivity extends AppCompatActivity {
                     OnBackInvokedDispatcher.PRIORITY_DEFAULT, callback);
         }
 
-       scheduleDailyNotification();
+        scheduleDailyNotification();
 
-        findViewById(R.id.welcomeImage).setOnClickListener(v -> {
-            // Show the board fragment
-            replaceFragment(new BoardFragment());
-        });
+        replaceFragment(new BoardFragment());
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            getOnBackInvokedDispatcher().registerOnBackInvokedCallback(0, () -> {
+                finish();
+            });
+        }
     }
     // Helper method to switch fragments in the layout
     private void replaceFragment(Fragment fragment) {
@@ -186,6 +189,7 @@ public class GameActivity extends AppCompatActivity {
             drawerLayout.closeDrawer(navigationView);
         } else {
             super.onBackPressed();
+            finish();;
         }
     }
     // Display game result with options to restart or exit
