@@ -2,7 +2,6 @@ package agam.w.myproject;
 
 import android.os.Handler;
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -16,8 +15,8 @@ public class RatATatCatViewModel extends ViewModel {
     private final MutableLiveData<Integer> currentPlayerTurnLiveData = new MutableLiveData<>(); // Current player turn
     private final MutableLiveData<TurnState> turnStateLiveData = new MutableLiveData<>(); // Current turn state
     private final MutableLiveData<SelectedPile> selectedPileLiveData = new MutableLiveData<>(); // Draw pile or garbage pile
-    private final MutableLiveData<Integer> selecetedCardPlayer1 = new MutableLiveData<>(); // From 0 - 3
-    private final MutableLiveData<Integer> selecetedCardPlayer2 = new MutableLiveData<>(); // From 0 - 3
+    private final MutableLiveData<ClickedCard> selecetedCardPlayer1 = new MutableLiveData<>(); // From 0 - 3
+    private final MutableLiveData<ClickedCard> selecetedCardPlayer2 = new MutableLiveData<>(); // From 0 - 3
     private final MutableLiveData<Card> topDrawPileCardLiveData = new MutableLiveData<>();
     private final MutableLiveData<Card> topGarbageCardLiveData = new MutableLiveData<>();
 
@@ -26,7 +25,7 @@ public class RatATatCatViewModel extends ViewModel {
         init();
     }
 
-    public void turn(SelectedPile selectedPile, int clickedCardPlayer1, int clickedCardPlayer2) {
+    public void turn(SelectedPile selectedPile, ClickedCard clickedCardPlayer1, ClickedCard clickedCardPlayer2) {
         if (!canPlay.getValue()) return;
 
         switch (turnStateLiveData.getValue()) {
@@ -46,11 +45,12 @@ public class RatATatCatViewModel extends ViewModel {
                             canPlay.setValue(false);
                         } else if (specialCard.getType() == SpecialCard.CardType.DRAW2) {
                             turnStateLiveData.setValue(TurnState.SPECIAL_DRAW2_CHOOSE_FIRST_CARD);
+                            canPlay.setValue(false);
                             // 2 second delay
                             new Handler().postDelayed(() -> {
                                 pullFromDrawPile();
                                 canPlay.setValue(true);
-                                turnStateLiveData.setValue(TurnState.SPECIAL_FIRST_CARD_IN_YOUR_DECK);
+                                turnStateLiveData.setValue(TurnState.FIRST_CARD_IN_YOUR_DECK);
                             }, 2000);
                         }
                     } else { // Regular card
@@ -70,27 +70,21 @@ public class RatATatCatViewModel extends ViewModel {
                         turnStateLiveData.setValue(TurnState.PLACE_IN_YOUR_DECK_FROM_GARBAGE);
                     }
                 }
-//                    turnStateLiveData.setValue(TurnState.SHOW_CARD_IDLE);
-//                    // hides after 2 seconds
-//                    new Handler().postDelayed(new Runnable() {
-//                        @Override
-//                        public void run() {
-//                            turnStateLiveData.setValue(TurnState.PLACE_IN_YOUR_DECK);
-//                        }
-//                    })
                 break;
             case PLACE_IN_YOUR_DECK:
             case PLACE_IN_YOUR_DECK_FROM_GARBAGE:
                 Log.d(TAG, "player: " + currentPlayerTurnLiveData.getValue() + "turn: PLACE_IN_YOUR_DECK = " + selectedPileLiveData.getValue().toString() + " clickedCardPlayer1 = " + clickedCardPlayer1 + " clickedCardPlayer2 = " + clickedCardPlayer2);
                 // Validate the required parameters
-                if (currentPlayerTurnLiveData.getValue() == 1 && (clickedCardPlayer1 < 0 || clickedCardPlayer1 > 4)) return;
-                if (currentPlayerTurnLiveData.getValue() == 2 && (clickedCardPlayer2 < 0 || clickedCardPlayer2 > 4)) return;
-                if (selectedPileLiveData.getValue() == SelectedPile.GARBAGE_PILE && (clickedCardPlayer1 == 4 || clickedCardPlayer2 == 4)) return;
+                if (currentPlayerTurnLiveData.getValue() == 1 && clickedCardPlayer1.ordinal() > 4) return;
+                if (currentPlayerTurnLiveData.getValue() == 2 && clickedCardPlayer2.ordinal() > 4) return;
+                if (selectedPileLiveData.getValue() == SelectedPile.GARBAGE_PILE && (clickedCardPlayer1 == ClickedCard.GARBAGE || clickedCardPlayer2 == ClickedCard.GARBAGE)) return;
 
                 // 0 - 3 is the deck cards, and 4 is the garbage
-                if (clickedCardPlayer1 == 4 || clickedCardPlayer2 == 4) {
+                if (clickedCardPlayer1 == ClickedCard.GARBAGE || clickedCardPlayer2 == ClickedCard.GARBAGE) {
                     throwToGarbage(pullFromDrawPile());
                     selectedPileLiveData.setValue(null);
+                    turnStateLiveData.setValue(TurnState.SELECT_PILE);
+                    currentPlayerTurnLiveData.setValue(currentPlayerTurnLiveData.getValue() == 1 ? 2 : 1);
                 } else {
                     if (currentPlayerTurnLiveData.getValue() == 1) {
                         placeInYourDeck(1,
@@ -103,31 +97,31 @@ public class RatATatCatViewModel extends ViewModel {
                                 clickedCardPlayer2);
                         selecetedCardPlayer2.setValue(clickedCardPlayer2);
                     }
+
+                    canPlay.setValue(false);
+                    turnStateLiveData.setValue(TurnState.SELECT_PILE);
+
+                    // In 2 seconds, reset the selected cards
+                    new Handler().postDelayed(() -> {
+                        selecetedCardPlayer1.setValue(null);
+                        selecetedCardPlayer2.setValue(null);
+                        // Switch to the next player's turn
+                        currentPlayerTurnLiveData.setValue(currentPlayerTurnLiveData.getValue() == 1 ? 2 : 1);
+                        // Reset the turn state
+                        canPlay.setValue(true);
+                    }, 2000);
                 }
-
-                canPlay.setValue(false);
-                turnStateLiveData.setValue(TurnState.SELECT_PILE);
-
-                // In 2 seconds, reset the selected cards
-                new Handler().postDelayed(() -> {
-                    selecetedCardPlayer1.setValue(null);
-                    selecetedCardPlayer2.setValue(null);
-                    // Switch to the next player's turn
-                    currentPlayerTurnLiveData.setValue(currentPlayerTurnLiveData.getValue() == 1 ? 2 : 1);
-                    // Reset the turn state
-                    canPlay.setValue(true);
-                }, 2000);
 
                 break;
             case SPECIAL_PEEK:
                 // Validate the required parameters
-                if ((clickedCardPlayer1 < 0 || clickedCardPlayer1 > 3) && (clickedCardPlayer2 < 0 || clickedCardPlayer2 > 3)) return;
+                if (clickedCardPlayer1.ordinal() > 3 && clickedCardPlayer2.ordinal() > 3) return;
                 if (selecetedCardPlayer1.getValue() != null) return;
                 if (selecetedCardPlayer2.getValue() != null) return;
 
-                if (clickedCardPlayer1 >= 0 && clickedCardPlayer1 <= 3)
+                if (clickedCardPlayer1 != ClickedCard.GARBAGE)
                     selecetedCardPlayer1.setValue(clickedCardPlayer1);
-                else if (clickedCardPlayer2 >= 0 && clickedCardPlayer2 <= 3)
+                else if (clickedCardPlayer2 != ClickedCard.GARBAGE)
                     selecetedCardPlayer2.setValue(clickedCardPlayer2);
 
                 canPlay.setValue(false);
@@ -145,14 +139,12 @@ public class RatATatCatViewModel extends ViewModel {
                 }, 2000);
 
                 break;
-
-//            case SPECIAL_DRAW2_CHOOSE_FIRST_CARD:
-            case SPECIAL_FIRST_CARD_IN_YOUR_DECK:
+            case FIRST_CARD_IN_YOUR_DECK:
                 // validate the required parameters
-                if (currentPlayerTurnLiveData.getValue() == 1 && (clickedCardPlayer1 < 0 || clickedCardPlayer1 > 4)) return;
-                if (currentPlayerTurnLiveData.getValue() == 2 && (clickedCardPlayer2 < 0 || clickedCardPlayer2 > 4)) return;
+                if (currentPlayerTurnLiveData.getValue() == 1 && clickedCardPlayer1.ordinal() > 4) return;
+                if (currentPlayerTurnLiveData.getValue() == 2 && clickedCardPlayer2.ordinal() > 4) return;
 
-                if (clickedCardPlayer1 == 4 || clickedCardPlayer2 == 4) {
+                if (clickedCardPlayer1 == ClickedCard.GARBAGE || clickedCardPlayer2 == ClickedCard.GARBAGE) {
                     throwToGarbage(pullFromDrawPile());
                 } else {
                     if (currentPlayerTurnLiveData.getValue() == 1) {
@@ -177,13 +169,13 @@ public class RatATatCatViewModel extends ViewModel {
                     // Reset the turn state
                     canPlay.setValue(true);
                 }, 2000);
-
-            case SPECIAL_DRAW2_CHOOSE_SECOND_CARD:
+                break;
+            case SECOND_CARD_IN_YOUR_DECK:
                 // validate the required parameters
-                if (currentPlayerTurnLiveData.getValue() == 1 && (clickedCardPlayer1 < 0 || clickedCardPlayer1 > 4)) return;
-                if (currentPlayerTurnLiveData.getValue() == 2 && (clickedCardPlayer2 < 0 || clickedCardPlayer2 > 4)) return;
+                if (currentPlayerTurnLiveData.getValue() == 1 && clickedCardPlayer1.ordinal() > 4) return;
+                if (currentPlayerTurnLiveData.getValue() == 2 && clickedCardPlayer2.ordinal() > 4) return;
 
-                if (clickedCardPlayer1 == 4 || clickedCardPlayer2 == 4) {
+                if (clickedCardPlayer1 == ClickedCard.GARBAGE || clickedCardPlayer2 == ClickedCard.GARBAGE) {
                     throwToGarbage(pullFromDrawPile());
                 } else {
                     if (currentPlayerTurnLiveData.getValue() == 1) {
@@ -210,7 +202,50 @@ public class RatATatCatViewModel extends ViewModel {
                     // Reset the turn state
                     canPlay.setValue(true);
                 }, 2000);
-            case SECOND_CARD_IN_YOUR_DECK:
+                break;
+
+            case SPECIAL_REPLACE_CHOOSE_YOUR_CARD:
+                if (currentPlayerTurnLiveData.getValue() == 1 && clickedCardPlayer1.ordinal() > 3) return;
+                if (currentPlayerTurnLiveData.getValue() == 2 && clickedCardPlayer2.ordinal() > 3) return;
+
+                if (currentPlayerTurnLiveData.getValue() == 1) {
+                    selecetedCardPlayer1.setValue(clickedCardPlayer1);
+                } if (currentPlayerTurnLiveData.getValue() == 2) {
+                    selecetedCardPlayer2.setValue(clickedCardPlayer2);
+                }
+                turnStateLiveData.setValue(TurnState.SPECIAL_REPLACE_CHOOSE_OPPONENT_CARD);
+                break;
+            case SPECIAL_REPLACE_CHOOSE_OPPONENT_CARD:
+                // Validates the player chooses and opponent card!
+                if (currentPlayerTurnLiveData.getValue() == 1 && clickedCardPlayer2.ordinal() > 3) return;
+                if (currentPlayerTurnLiveData.getValue() == 2 && clickedCardPlayer1.ordinal() > 3) return;
+
+                if (currentPlayerTurnLiveData.getValue() == 1) {
+                    selecetedCardPlayer2.setValue(clickedCardPlayer2);
+                } if (currentPlayerTurnLiveData.getValue() == 2) {
+                    selecetedCardPlayer1.setValue(clickedCardPlayer1);
+                }
+
+                canPlay.setValue(false);
+
+                new Handler().postDelayed(() -> {
+
+                    myGame.specialCardReplace(selecetedCardPlayer1.getValue().ordinal(), selecetedCardPlayer2.getValue().ordinal());
+
+                    // For the card switch to appear, we have to "update" the live data, and then the observer will update the cards
+                    selecetedCardPlayer1.setValue(selecetedCardPlayer1.getValue());
+                    selecetedCardPlayer2.setValue(selecetedCardPlayer2.getValue());
+
+                    new Handler().postDelayed(() -> {
+                        selecetedCardPlayer1.setValue(null);
+                        selecetedCardPlayer2.setValue(null);
+                        turnStateLiveData.setValue(TurnState.SELECT_PILE);
+                        canPlay.setValue(true);
+                        pullFromDrawPile();
+                        currentPlayerTurnLiveData.setValue(currentPlayerTurnLiveData.getValue() == 1 ? 2 : 1);
+                    }, 2000);
+                }, 1000);
+
             default:
                 break;
         }
@@ -218,12 +253,12 @@ public class RatATatCatViewModel extends ViewModel {
 
     public Card pullFromDrawPile() {
         Card c = myGame.getDrawPile().pop();
-        topDrawPileCardLiveData.setValue(c);
+        topDrawPileCardLiveData.setValue(myGame.getDrawPile().peek());
         return c;
     }
 
     // isDrawPile = false, takes from the garbage
-    public void placeInYourDeck(int player, boolean isDrawPile, int pos) {
+    public void placeInYourDeck(int player, boolean isDrawPile, ClickedCard pos) {
         myGame.placeInYourDeck(player, isDrawPile, pos);
         topDrawPileCardLiveData.setValue(myGame.getDrawPile().peek());
         topGarbageCardLiveData.setValue(myGame.getGarbage().peek());
@@ -247,11 +282,9 @@ public class RatATatCatViewModel extends ViewModel {
         return selectedPileLiveData;
     }
 
-    public LiveData<Integer> getSelecetedCardPlayer1() {
-        return selecetedCardPlayer1;
-    }
+    public LiveData<ClickedCard> getSelecetedCardPlayer1() { return selecetedCardPlayer1; }
 
-    public LiveData<Integer> getSelecetedCardPlayer2() {
+    public LiveData<ClickedCard> getSelecetedCardPlayer2() {
         return selecetedCardPlayer2;
     }
 
@@ -287,7 +320,6 @@ public class RatATatCatViewModel extends ViewModel {
 
     public void init() {
         myGame = new MyGameManager();
-        myGame.getDrawPile().push(new SpecialCard(SpecialCard.CardType.DRAW2));
         currentPlayerTurnLiveData.setValue(1);
         turnStateLiveData.setValue(TurnState.SELECT_PILE);
         selectedPileLiveData.setValue(null);

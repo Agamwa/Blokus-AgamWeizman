@@ -73,14 +73,30 @@
 
     <TextView
         android:id="@+id/textViewTurn"
-        android:layout_width="187dp"
-        android:layout_height="47dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:fontFamily="@font/spicy_rice"
         android:text="Player 1's turn"
+        android:textAlignment="center"
         android:textColor="@color/blue"
-        android:layout_gravity="center"
+        android:layout_margin="5dp"
         android:textSize="30dp" />
 
+
+    <TextView
+        android:id="@+id/textViewTurnState"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:fontFamily="@font/spicy_rice"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:text="Choose a place in your deck!\n (Or throw into the garbage)"
+        android:textAlignment="center"
+        android:textColor="@color/blue"
+        android:layout_margin="10dp"
+        android:textSize="20dp" />
 
     <Button
         android:id="@+id/btnFinish"

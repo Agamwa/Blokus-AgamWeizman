@@ -55,7 +55,8 @@ public class MyGameManager {
         return winner;
     }
 
-    public void placeInYourDeck(int player, boolean isDrawPile, int pos) {
+    public void placeInYourDeck(int player, boolean isDrawPile, ClickedCard pos) {
+        if (pos.ordinal() > 3) return;
         Card chosenCard;
         if (isDrawPile) {
             chosenCard = drawPile.pop(); // Take top card from draw pile
@@ -63,7 +64,7 @@ public class MyGameManager {
             chosenCard = garbage.pop();  // Take top card from garbage pile
         }
         // Replace the card at the specified position with the chosen card
-        Card removedCard = replace(player, pos, chosenCard);
+        Card removedCard = replace(player, pos.ordinal(), chosenCard);
         // Put the removed card into the garbage pile
         garbage.push(removedCard);
     }

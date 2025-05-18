@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.icu.util.Calendar;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
 import android.widget.TextView;
@@ -132,6 +131,11 @@ public class GameActivity extends AppCompatActivity {
         }
 
        scheduleDailyNotification();
+
+        findViewById(R.id.welcomeImage).setOnClickListener(v -> {
+            // Show the board fragment
+            replaceFragment(new BoardFragment());
+        });
     }
     // Helper method to switch fragments in the layout
     private void replaceFragment(Fragment fragment) {
@@ -196,7 +200,7 @@ public class GameActivity extends AppCompatActivity {
                 })
                 .setNegativeButton("Restart", (dialog, which) -> {
                     currentFragment = getSupportFragmentManager().findFragmentById(R.id.frame_container);
-                    ((BoardFragment) currentFragment).init();
+                    ((BoardFragment) currentFragment).resetGame();
                     dialog.dismiss();
                 })
                 .show();
