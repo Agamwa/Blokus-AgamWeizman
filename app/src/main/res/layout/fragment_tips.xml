@@ -16,13 +16,16 @@
         android:fontFamily="@font/spicy_rice"
         android:text="Tips"
         android:textColor="#17287C"
+        android:textAlignment="center"
         android:textSize="40dp" />
 
     <ImageView
         android:id="@+id/imageView4"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:src="@drawable/game" />
+        android:src="@drawable/game"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp" />
 
 
 </LinearLayout>

@@ -89,14 +89,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:fontFamily="@font/spicy_rice"
+        android:fontFamily="@font/titles"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
         android:text="Choose a place in your deck!\n (Or throw into the garbage)"
         android:textAlignment="center"
         android:textColor="@color/blue"
         android:layout_margin="10dp"
-        android:textSize="20dp" />
+        android:textSize="25dp" />
 
     <Button
         android:id="@+id/btnFinish"

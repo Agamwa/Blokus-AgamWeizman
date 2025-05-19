@@ -74,9 +74,7 @@ public class GameActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 int id = item.getItemId();
-                if (id == R.id.nav_choose) {
-                    replaceFragment(new ChooseFragment());
-                } else if (id == R.id.nav_game_history) {
+             if (id == R.id.nav_game_history) {
                     replaceFragment(new LeaderBoardFragment());
                 } else if (id == R.id.nav_rules) {
                     replaceFragment(new RulesFragment());

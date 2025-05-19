@@ -8,16 +8,10 @@
         android:icon="@drawable/ic_volume_off"
         android:title="Turn off music"
         android:fontFamily="@font/titles"/>
-
-    <item
-        android:id="@+id/nav_choose"
-        android:icon="@drawable/ic_choose"
-        android:title="Start a new game"
-        android:fontFamily="@font/titles"/>
     <item
         android:id="@+id/nav_board"
-        android:icon="@drawable/ic_back_to_game"
-        android:title=" Back to game"
+        android:icon="@drawable/ic_choose"
+        android:title=" Start a new game"
         android:fontFamily="@font/titles"/>
 
     <item

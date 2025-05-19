@@ -8,11 +8,6 @@
     tools:context=".LeaderBoardFragment">
 
 
-    <TextView
-        android:id="@+id/leaderboardTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Leaderboard will appear here"
-        android:textSize="18sp" />
+   
 
 </LinearLayout>
