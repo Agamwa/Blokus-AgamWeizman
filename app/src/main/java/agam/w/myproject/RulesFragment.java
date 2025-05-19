@@ -19,6 +19,8 @@ public class RulesFragment extends Fragment {
     TextView tv;
     ImageButton speak;
     TextToSpeech textToSpeech;
+    boolean isTTSReady = false;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -26,33 +28,43 @@ public class RulesFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_rules, container, false);
         tv = view.findViewById(R.id.textTV);
         speak = view.findViewById(R.id.imageButtonSpeak);
-        // Initialize the TextToSpeech engine with context and listener
-        textToSpeech= new TextToSpeech(getContext(), new TextToSpeech.OnInitListener() {
+
+        textToSpeech = new TextToSpeech(getContext(), new TextToSpeech.OnInitListener() {
             @Override
-            public void onInit(int i) {
-                // If initialization is successful (no error)
-                if(i!= TextToSpeech.ERROR)
-                    // Set the language for speech output to English
-                    textToSpeech.setLanguage(Locale.ENGLISH);
+            public void onInit(int status) {
+                if (status == TextToSpeech.SUCCESS) {
+                    int result = textToSpeech.setLanguage(Locale.ENGLISH);
+                    if (result != TextToSpeech.LANG_MISSING_DATA &&
+                            result != TextToSpeech.LANG_NOT_SUPPORTED) {
+                        isTTSReady = true;
+                    }
+                }
             }
         });
-        // Set an OnClickListener for the speak button
+
         speak.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // If the TTS engine is currently speaking, stop it
-                if(textToSpeech.isSpeaking())
-                    textToSpeech.stop();
-                else
-                {
-                    // Otherwise, get the text from the TextView
-                    String text = tv.getText().toString();
-                    // Speak the text immediately, clearing any queued utterances
-                    textToSpeech.speak(text, TextToSpeech.QUEUE_FLUSH, null);
-                }
+                if (!isTTSReady) return; // מניעת קריסה אם המנוע לא מוכן עדיין
 
+                if (textToSpeech.isSpeaking()) {
+                    textToSpeech.stop();
+                } else {
+                    String text = tv.getText().toString();
+                    textToSpeech.speak(text, TextToSpeech.QUEUE_FLUSH, null, null);
+                }
             }
         });
+
         return view;
+    }
+
+    @Override
+    public void onDestroy() {
+        if (textToSpeech != null) {
+            textToSpeech.stop();
+            textToSpeech.shutdown();
+        }
+        super.onDestroy();
     }
 }

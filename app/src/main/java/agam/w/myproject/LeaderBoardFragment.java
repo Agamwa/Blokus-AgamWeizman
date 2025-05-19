@@ -11,12 +11,11 @@ import android.widget.TextView;
 
 
 public class LeaderBoardFragment extends Fragment {
-    private TextView leaderboardTextView;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_leader_board, container, false);
-        leaderboardTextView = view.findViewById(R.id.leaderboardTextView);
+
 
 
 
