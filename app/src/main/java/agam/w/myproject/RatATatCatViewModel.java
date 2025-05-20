@@ -2,10 +2,15 @@ package agam.w.myproject;
 
 import android.os.Handler;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FieldValue;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class RatATatCatViewModel extends ViewModel {
     private static final String TAG = "RatATatCatViewModel";
@@ -42,7 +47,6 @@ public class RatATatCatViewModel extends ViewModel {
                             turnStateLiveData.setValue(TurnState.SPECIAL_REPLACE_CHOOSE_YOUR_CARD);
                         } else if (specialCard.getType() == SpecialCard.CardType.PEEK) {
                             turnStateLiveData.setValue(TurnState.SPECIAL_PEEK);
-                            canPlay.setValue(false);
                         } else if (specialCard.getType() == SpecialCard.CardType.DRAW2) {
                             turnStateLiveData.setValue(TurnState.SPECIAL_DRAW2_CHOOSE_FIRST_CARD);
                             canPlay.setValue(false);
@@ -119,9 +123,9 @@ public class RatATatCatViewModel extends ViewModel {
                 if (selecetedCardPlayer1.getValue() != null) return;
                 if (selecetedCardPlayer2.getValue() != null) return;
 
-                if (clickedCardPlayer1 != ClickedCard.GARBAGE)
+                if (clickedCardPlayer1 != ClickedCard.GARBAGE && clickedCardPlayer1 != ClickedCard.NO_CARD)
                     selecetedCardPlayer1.setValue(clickedCardPlayer1);
-                else if (clickedCardPlayer2 != ClickedCard.GARBAGE)
+                else if (clickedCardPlayer2 != ClickedCard.GARBAGE && clickedCardPlayer2 != ClickedCard.NO_CARD)
                     selecetedCardPlayer2.setValue(clickedCardPlayer2);
 
                 canPlay.setValue(false);
@@ -311,7 +315,22 @@ public class RatATatCatViewModel extends ViewModel {
     }
 
     public String endGame() {
-        return myGame.endGame();
+        // Add score to logged in user, if player 1 won
+        String winner = myGame.endGame();
+        FirebaseFirestore firestore = FirebaseFirestore.getInstance();
+        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        // Add 1 to the score field
+        firestore.collection("Users").document(userId).update("wins", FieldValue.increment(1))
+                .addOnSuccessListener(t -> {
+                    Log.d("RatATatCatViewModel", "Updated the wins score successfully");
+                })
+                .addOnFailureListener(e -> {
+                    Log.e("RatATatCatViewModel", "Failed updating the wins field: " + e.getMessage());
+                    // TODO: add reference to the context
+//                    Toast.makeText()
+                });
+
+        return winner;
     }
 
     public boolean garbageIsEmpty() {

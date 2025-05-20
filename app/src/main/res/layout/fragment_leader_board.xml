@@ -7,7 +7,24 @@
     android:orientation="vertical"
     tools:context=".LeaderBoardFragment">
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:text="LEADERBOARD"
+        android:textSize="36sp"
+        android:fontFamily="@font/sansita_italic"
+        android:letterSpacing="0.1"
+        android:textStyle="bold"
+        android:padding="18dp"
+        android:textColor="@color/black"
+        />
 
-   
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvLeadeboardItems"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+
 
 </LinearLayout>
