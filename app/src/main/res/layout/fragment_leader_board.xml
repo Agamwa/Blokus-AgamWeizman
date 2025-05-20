@@ -11,13 +11,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAlignment="center"
-        android:text="LEADERBOARD"
+        android:text="Game history"
         android:textSize="36sp"
-        android:fontFamily="@font/sansita_italic"
-        android:letterSpacing="0.1"
-        android:textStyle="bold"
+        android:fontFamily="@font/spicy_rice"
         android:padding="18dp"
-        android:textColor="@color/black"
+        android:textColor="@color/blue"
         />
 
     <androidx.recyclerview.widget.RecyclerView
