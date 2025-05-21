@@ -199,8 +199,6 @@ public class GameActivity extends AppCompatActivity {
                 .setPositiveButton("Close", (dialog, which) -> {
                     dialog.dismiss();
                     finish();
-                    Intent intent = new Intent(GameActivity.this, WaitActivity.class);
-                    startActivity(intent);
                 })
                 .setNegativeButton("Restart", (dialog, which) -> {
                     currentFragment = getSupportFragmentManager().findFragmentById(R.id.frame_container);

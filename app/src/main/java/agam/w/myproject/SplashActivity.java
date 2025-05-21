@@ -33,7 +33,7 @@ public class SplashActivity extends AppCompatActivity {
         MediaPlayer mediaPlayer = MediaPlayer.create(this, R.raw.oppening_app);
         mediaPlayer.start();
 
-        // After 8 seconds, move to the HomeActivity
+        // After 5 seconds, move to the HomeActivity
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
