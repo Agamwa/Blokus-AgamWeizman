@@ -15,14 +15,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyProject"
         tools:targetApi="31">
+        <activity
+            android:name=".WaitActivity"
+            android:exported="false" />
+
         <receiver
             android:name=".MyNotificationReceiver"
             android:enabled="true"
-            android:exported="true">
-
-        </receiver>
-
-
+            android:exported="true"></receiver>
 
         <service
             android:name=".MusicService"
@@ -57,6 +57,5 @@
             </intent-filter>
         </activity>
     </application>
-
 
 </manifest>
